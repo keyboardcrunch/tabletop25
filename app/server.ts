@@ -8,7 +8,7 @@ const app = new Application();
 const router = new Router();
 
 // send a message to all connected clients
-function broadcast(message) {
+function broadcast(message:string) {
   for (const client of connectedClients.values()) {
     client.send(message);
   }
@@ -40,7 +40,6 @@ router.get("/checkupdate", async (ctx) => {
     socket.close(1008, `Username ${username} is already taken`);
     return;
   }
-  socket.username = username;
   connectedClients.set(username, socket);
   console.log(`
 New client connected: ${username}
@@ -62,8 +61,8 @@ Headers: ${headers}
 
   // client disconnect tasks
   socket.onclose = () => {
-    console.log(`Client ${socket.username} disconnected`);
-    connectedClients.delete(socket.username);
+    console.log(`Client ${username} disconnected`);
+    connectedClients.delete(username);
   };
 
   // message receive handler
@@ -79,7 +78,7 @@ Headers: ${headers}
         broadcast(
           JSON.stringify({
             event: "send-message",
-            username: socket.username,
+            username: username,
             message: data.message,
           }),
         );
@@ -107,7 +106,7 @@ router.post("/crashreport", async (ctx) => {
   }
   for (const file of files) {
     console.log(`Received crash report file ${file.filename}`);
-    // save the file to disk or process it as needed
+    // save the file to disk or process it as needed, need to fix this and dump to /uploads
     await Deno.writeFile(file.filename, await Deno.readAll(file.content));
   }
 });
