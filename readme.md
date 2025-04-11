@@ -8,11 +8,10 @@ available (compromised/repackaged malicious installer).
 
 
 ### Routes
-  / 
-  /download.html
-  /downloads (malicious payloads)
-  /crashreport (exfiltrated data)
-  /checkupdate (websocket c2 for malicious updater task)
+  - /download.html
+  - /downloads (malicious payloads)
+  - /crashreport (exfiltrated data)
+  - /checkupdate (websocket c2 for malicious updater task)
 
 ### WebSocket
 The /checkupdate endpoint is for websockets, where the "update" scheduled task will connect to and listen for and
@@ -21,8 +20,8 @@ send messages.
 ### Client Commands
   * getemail: "first last"
   * abort
-  * urlexec: "<URL>"
-  * powershell: "<powershell>"
+  * urlexec: "URL"
+  * powershell: "powershell"
 
 ### Server Messages
-  * getemail: "<EMAIL>"
+  * getemail: "EMAIL"
