@@ -1,0 +1,18 @@
+version: "3.0"
+
+services:
+  beaversite:
+    image: denoland/deno:latest
+    container_name: beaversite
+    environment:
+      - TZ=America/Chicago
+      - PUID=1000
+      - PGID=1000
+    expose:
+      - 80
+    ports:
+      - 80:8080
+    volumes:
+      - './app:/app'
+    command: deno run -A --watch /app/server.ts
+    restart: unless-stopped
