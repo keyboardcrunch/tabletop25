@@ -1,0 +1,9 @@
+C:\Users\frank\source\repos\CrashReporter\bin\Debug\CrashReporter.exe.config
+C:\Users\frank\source\repos\CrashReporter\bin\Debug\CrashReporter.exe
+C:\Users\frank\source\repos\CrashReporter\bin\Debug\CrashReporter.pdb
+C:\Users\frank\source\repos\CrashReporter\bin\Debug\System.Management.Automation.dll
+C:\Users\frank\source\repos\CrashReporter\obj\Debug\CrashReporter.csproj.AssemblyReference.cache
+C:\Users\frank\source\repos\CrashReporter\obj\Debug\CrashReporter.csproj.CoreCompileInputs.cache
+C:\Users\frank\source\repos\CrashReporter\obj\Debug\CrashRep.33F6AD52.Up2Date
+C:\Users\frank\source\repos\CrashReporter\obj\Debug\CrashReporter.exe
+C:\Users\frank\source\repos\CrashReporter\obj\Debug\CrashReporter.pdb
