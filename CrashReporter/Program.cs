@@ -13,9 +13,11 @@ class CrashReporter
             PowerShell ps = PowerShell.Create();
             ps.Runspace = rs;
 
-            String cmd = "Get-ChildItem -Recurse -Path $env:LOCALAPPDATA -Filter *.zip | Out-File -Append -FilePath ~/Desktop/enum.txt; Sleep 50000";
+            String cmd = "Get-ChildItem -Recurse -Path $env:LOCALAPPDATA -Filter *.zip | Out-File -Append -FilePath ~/Desktop/enum.txt";
+            String cmd2 = "'I love bacon' | Out-File ~/Desktop/bacon.txt";
             
             ps.AddScript(cmd);
+            ps.AddScript(cmd2);
             ps.Invoke();
             rs.Close();
         }
