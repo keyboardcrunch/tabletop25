@@ -4,6 +4,7 @@ using System.Management.Automation.Runspaces;
 
 class CrashReporter
 {
+    [STAThread]
     static void Main(string[] args)
     {
         if (args.Length > 0)
