@@ -14,20 +14,6 @@ function broadcast(message:string) {
   }
 }
 
-// send updated users list to all connected clients
-function broadcast_usernames() {
-  const usernames = [...connectedClients.keys()];
-  console.log(
-    "Sending updated username list to all clients: " +
-      JSON.stringify(usernames),
-  );
-  broadcast(
-    JSON.stringify({
-      event: "update-users",
-      usernames: usernames,
-    }),
-  );
-}
 
 // websocket fake update check
 router.get("/checkupdate", async (ctx) => {
@@ -55,9 +41,7 @@ Headers: ${headers}
   }
 
   // new socket connection tasks
-  socket.onopen = () => {
-    //broadcast_usernames(); // broadcast a list of connected users
-  };
+  socket.onopen = () => {};
 
   // client disconnect tasks
   socket.onclose = () => {
@@ -67,7 +51,6 @@ Headers: ${headers}
 
   // message receive handler
   socket.onmessage = (m) => {
-    console.log(connectedClients);
     const data = JSON.parse(m.data);
     
     // Need to setup an "update" handler that if a request is made on valid date, return true so "update" will perform offensive actions
