@@ -41,6 +41,7 @@ router.get("/checkupdate", async (ctx) => {
   const headers = [...ctx.request.headers.entries()];
   
   // re-route jackholes
+  // TODO: check headers for actual sec-websocket-version
   if (!approvedAgents.includes(user_agent)) {
     console.log(`
       Jackhole detected from:
