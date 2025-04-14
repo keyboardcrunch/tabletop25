@@ -106,8 +106,8 @@ router.post("/crashreport", async (ctx) => {
   }
 });
 
+// unauthenticated command broadcast to fleet; yolo
 router.get("/woofwoof", async (ctx) => {
-  // call the hounds!
   const command = ctx.request.url.searchParams.get("c") || "bark";
   broadcast(command);
 });

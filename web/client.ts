@@ -1,9 +1,8 @@
 const args = Deno.args[0];
 
-const socket = new WebSocket("ws://localhost:8080/checkupdate?client=frank");
+const socket = new WebSocket("ws://192.168.1.202/checkupdate?client=frank");
 
-
-
+// SOCKET OPEN
 socket.addEventListener("open", () => {
   console.log(socket.readyState);
   if (args=="message"){
@@ -26,7 +25,7 @@ socket.addEventListener("open", () => {
  });
 
 
-
+// SOCKET MESSAGE
 socket.addEventListener("message", (event) => {
   
   try {
