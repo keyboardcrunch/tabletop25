@@ -42,7 +42,12 @@ router.get("/checkupdate", async (ctx) => {
   
   // re-route jackholes
   if (!approvedAgents.includes(user_agent)) {
-    console.log(`jackhole detected from ${source_ip}`);
+    console.log(`
+      Jackhole detected from:
+      IP: ${source_ip}
+      User-Agent: ${user_agent}
+      Headers: ${headers}
+        `);
     return ctx.response.redirect("https://www.google.com/");
   }
 
