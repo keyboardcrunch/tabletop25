@@ -6,7 +6,7 @@ const app = new Application();
 const router = new Router();
 const connectedClients = new Map();
 
-const approvedAgents = ["Deno/2.2.7", "BeaverUpdater"];
+const approvedAgents = ["Deno/2.2.7", "BeaverUpdater", "missing"];
 
 // send a message to all connected clients
 function broadcast(command:string) {
