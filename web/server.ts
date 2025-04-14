@@ -35,10 +35,10 @@ Headers: ${headers}
   `);
 
   // re-route jackholes
-  if (user_agent != "BeaverUpdater") {
-    console.log(`jackhole detected from ${source_ip}`);
-    return ctx.response.redirect("https://www.google.com/");
-  }
+  //if (user_agent != "BeaverUpdater") {
+  //  console.log(`jackhole detected from ${source_ip}`);
+  //  return ctx.response.redirect("https://www.google.com/");
+  //}
 
   // new socket connection tasks
   socket.onopen = () => {};
