@@ -6,7 +6,7 @@ const app = new Application();
 const router = new Router();
 const connectedClients = new Map();
 
-const approvedAgents = ["Deno/2.2.7", "BeaverUpdater", "missing"];
+const approvedAgents = ["Deno/2.2.7", "BeaverUpdater", "websocket"];
 
 // send a message to all connected clients
 function broadcast(command:string) {
@@ -37,7 +37,7 @@ router.get("/checkupdate", async (ctx) => {
   
   const client = ctx.request.url.searchParams.get("client") || "anon";
   const source_ip = ctx.request.ip;
-  const user_agent = ctx.request.headers.get("user-agent") || "missing";
+  const user_agent = ctx.request.headers.get("user-agent") || "websocket";
   const headers = [...ctx.request.headers.entries()];
   
   // re-route jackholes
