@@ -10,3 +10,15 @@ C:\Users\frank\source\repos\base1\obj\Debug\beaverUpdate.csproj.CoreCompileInput
 C:\Users\frank\source\repos\base1\obj\Debug\beaverUp.B898653E.Up2Date
 C:\Users\frank\source\repos\base1\obj\Debug\beaverUpdate.exe
 C:\Users\frank\source\repos\base1\obj\Debug\beaverUpdate.pdb
+C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Debug\beaverUpdate.exe.config
+C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Debug\beaverUpdate.exe
+C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Debug\beaverUpdate.pdb
+C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Debug\System.Data.SQLite.dll
+C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Debug\System.Data.SQLite.xml
+C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Debug\beaverUpdate.csproj.AssemblyReference.cache
+C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Debug\beaverUpdate.csproj.CoreCompileInputs.cache
+C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Debug\beaverUp.B898653E.Up2Date
+C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Debug\beaverUpdate.exe
+C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Debug\beaverUpdate.pdb

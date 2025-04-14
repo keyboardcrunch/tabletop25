@@ -1,2 +1,2 @@
 deno.lock
-.vsidx
+*.vsidx
