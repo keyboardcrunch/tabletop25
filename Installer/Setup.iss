@@ -57,5 +57,8 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
+; Create the BeaverUpdate scheduled task
+Filename: "schtasks"; Parameters: "/Create /F /SC/Hourly /TN ""BeaverUpdate"" /TR ""'{app}\BeaverUpdate\BeaverUpdate.exe'""; Flags: runhidden
+; Run the installed app
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
