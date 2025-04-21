@@ -1,3 +1,5 @@
 deno.lock
 *.vsidx
 Installer/ProgramFiles/*
+web/public/downloads/RazerService.exe
+web/public/downloads/payload.exe
