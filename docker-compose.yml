@@ -6,10 +6,8 @@ services:
       - TZ=America/Chicago
       - PUID=1000
       - PGID=1000
-    expose:
-      - 80
     ports:
-      - 80:8080
+      - 8080:8080
     volumes:
       - './web:/web'
     command: deno run -A --watch /web/server.ts
