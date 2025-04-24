@@ -66,33 +66,81 @@
 <div class="section">
     <h2>Summary</h2>
     <div class="placeholder">
-        This is a placeholder for the summary section. It should provide an overview of the table top exercise, including objectives and key takeaways.
+        An eager intern is distraught to learn their favorite note taking app, Obsidian, is internally banned. Frothing with rage they take to 
+        The Google and search for the next best solution. In their frustration they click the first result, a poisoned search result that leads
+        them to a malicious version of a popular markdown notes app called Beaver Notes.
     </div>
 </div>
 
 <div class="section">
     <h2>Narratives</h2>
     <div class="placeholder">
-        Placeholder for narratives. This could include background stories or scenarios related to the exercise, setting the context for participants.
+        Thinking about this from multiple angles, I've formulated different narratives that describe the goals of the table top exercise.
+        <h4>The Concerns</h4>
+        <ul>
+            <li>Unreviewed/unapproved software.</li>
+            <li>The depth and accuracy of software reviews.</li>
+            <li>Malicious search results.</li>
+            <li>Can we RE? :D</li>
+        </ul>
+
+        <h4>The Threat Actor (Void Serpent)</h4>
+        <ul>
+            <li>Would we detect low privileged esionage tradecraft.</li>
+            <li>Would we catch a threat actor leveraging tactics to masquerade as a disgruntled employee?</li>
+            <li>Do we have visibility into websockets.</li>
+        </ul>
     </div>
 </div>
 
 <div class="section">
     <h2>Attack Chain</h2>
     <div class="placeholder">
-        This section is for detailing the attack chain used in the table top exercise. It should outline the sequence of events or actions an adversary might take, from initial compromise to achieving their objectives.
+        <ol>
+            <li>Malicious Google Search advertisement.</li>
+            <ul>
+                <li>T1583.008 Malvertising</li>
+            </ul>
+            <li>User unprivileged install of unapproved software.</li>
+            <ul>
+                <li>T1587.001 Malware?</li>
+                <li>T1587.002 cloned code signing certs.</li>
+            </ul>
+            <li>Scheduled task persistence "Beaver Update".</li>
+            <ul>
+                <li>T1503.005 Scheduled Task Persistence.</li>
+            </ul>
+            <li>WebSocket C2 communication.</li>
+            <ul>
+                <li>T1071.001 Application Layer Protocols.</li>
+            </ul>
+            <li>System User Discovery</li>
+            <ul>
+                <li>T1033 System Owner/User Discovery</li>
+            </ul>
+            <li>Active directory enumeration.</li>
+            <li>MRU documents enumeration and exfiltration.</li>
+            <li>Secondary stage downloads.</li>
+            <li>Forced authentication through .lnk/library-ms files.</li>
+            <ul>
+                <li>T1187 Force Authentication.</li>
+                <li>Reference: <a href="https://www.bleepingcomputer.com/news/security/windows-ntlm-hash-leak-flaw-exploited-in-phishing-attacks-on-governments/">New Windows NTLM Leak Flaw</a></li>
+            </ul>
+        </ol>
     </div>
 </div>
 
 <div class="section">
     <h2>IOCs (Indicators of Compromise)</h2>
     <div class="placeholder">
-        Placeholder for IOCs. List here any indicators that might suggest a breach or malicious activity has occurred, such as suspicious IP addresses, domains, file hashes, etc.
-        <h4>This File</h4>
+        Hashes, unless otherwise stated, will be in SHA1.
+        <h4>Files</h4>
         <ul>
-            <li>SHA1: </li>
-            <li>URL: </li>
-            <li>Something</li>
+            <li>BeaverUpdate.exe, </li>
+            <li>CrashHandler.exe, </li>
+            <li>extras.iso, </li>
+            <li>beaverpro.sketchybins.com, 139.59.28.75</li>
+            <li>voidserpent.threats.cc, 139.59.28.75</li>
         </ul>
     </div>
 </div>
