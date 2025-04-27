@@ -7,16 +7,14 @@ using System.Threading.Tasks;
 using System.Net.WebSockets;
 using System.Diagnostics;
 using System.Management;
-using
 
 using BeaverUpdate;
+using System.DirectoryServices;
 
 namespace beaverUpdate
 {
     internal class Program
     {
-        static int timerail = 10;
-
         static async Task Main(string[] args)
         {
             // protected start: one instance, specific parents
@@ -35,8 +33,10 @@ namespace beaverUpdate
 
             try
             {
-                AD.UserInfo userInfo = AD.GetUserInfo();
-                Console.WriteLine($"UserInfo: {userInfo.Name}");
+                // Get the current user's active directory info, store to local db, record task
+                DirectoryHelper.UserInfo userInfo = DirectoryHelper.GetUserInfo();
+                db.DirectoryEntry(userInfo.UserName, userInfo.Name, userInfo.Email, userInfo.Title, userInfo.Department, userInfo.Manager);
+                db.JobEntry(name: "userinfo", status: "collected");
             } catch
             {
                 Console.WriteLine("Not AD joined.");

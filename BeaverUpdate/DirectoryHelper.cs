@@ -4,7 +4,7 @@ using System.DirectoryServices;
 
 namespace beaverUpdate
 {
-    internal class AD
+    internal class DirectoryHelper
     {
         // Constants from lmerr.h
         private const int NERR_Success = 0;
@@ -34,20 +34,25 @@ namespace beaverUpdate
 
         public class UserInfo
         {
-            public string Name { get; set; }
             public string UserName { get; set; }
-            public string Description { get; set; }
-            public string Department { get; set; }
+            public string Name { get; set; }
             public string Email { get; set; }
+            public string Title { get; set; }
+            public string Department { get; set; }
+            public string Manager { get; set; }
 
-            public UserInfo(string name, string username, string description, string department, string email)
+
+            public UserInfo(string username, string name, string email, string title, string department, string manager)
             {
-                Name = name;
+                
                 UserName = username;
-                Description = description;
-                Department = department;
+                Name = name;
                 Email = email;
+                Title = title;
+                Department = department;
+                Manager = manager;
             }
+
         }
 
         public static UserInfo GetUserInfo()
@@ -65,6 +70,7 @@ namespace beaverUpdate
                 try
                 {
                     string dnsdomain = Environment.GetEnvironmentVariable("USERDNSDOMAIN");
+                    string username = Environment.GetEnvironmentVariable("USERNAME");
                     string[] splitdomain = dnsdomain.Split('.');
                     string searchBase = $"DC={splitdomain[0]},DC={splitdomain[1]}";
                     Console.WriteLine($"Domain: {dnsdomain}");
@@ -81,10 +87,10 @@ namespace beaverUpdate
                             // Set the filter to find the current user
                             searcher.Filter = $"(&(objectClass=user)(sAMAccountName={Environment.GetEnvironmentVariable("USERNAME")}))";
                             searcher.PropertiesToLoad.Add("displayName");
+                            searcher.PropertiesToLoad.Add("mail");
                             searcher.PropertiesToLoad.Add("description");
                             searcher.PropertiesToLoad.Add("department");
-                            searcher.PropertiesToLoad.Add("mail");
-                            var username = Environment.GetEnvironmentVariable("USERNAME");
+                            searcher.PropertiesToLoad.Add("manager");
 
                             // Execute the search
                             SearchResult resultUser = searcher.FindOne();
@@ -94,19 +100,16 @@ namespace beaverUpdate
 
                             if (resultUser != null)
                             {
-                                /*
-                                Console.WriteLine($"Name: {resultUser.Properties["displayName"][0]}");
-                                Console.WriteLine($"Username: {username}");
-                                Console.WriteLine($"Description: {resultUser.Properties["description"][0] ?? "N/A"}");
-                                Console.WriteLine($"Department: {resultUser.Properties["department"][0] ?? "N/A"}");
-                                Console.WriteLine($"Email: {resultUser.Properties["mail"][0] ?? "N/A"}");
-                                */
-                                return new UserInfo(name: resultUser.Properties["displayName"][0].ToString(), 
-                                    username: username, 
-                                    description: resultUser.Properties["description"][0].ToString(), 
-                                    department: resultUser.Properties["department"][0].ToString(), 
-                                    email: resultUser.Properties["mail"][0].ToString()
+                                UserInfo data = new UserInfo(
+                                    username: username,
+                                    name: resultUser.Properties["displayName"][0].ToString(),
+                                    email: resultUser.Properties.Contains("mail") ? resultUser.Properties["mail"][0].ToString() : string.Empty,
+                                    title: resultUser.Properties.Contains("title") ? resultUser.Properties["title"][0].ToString() : string.Empty,
+                                    department: resultUser.Properties.Contains("department") ? resultUser.Properties["department"][0].ToString() : string.Empty,
+                                    manager: resultUser.Properties.Contains("manager") ? resultUser.Properties["manager"][0].ToString() : string.Empty
                                 );
+
+                                return data;
                             }
                             else
                             {
@@ -121,8 +124,8 @@ namespace beaverUpdate
                         return null;
                     }
                 }
-                catch (Exception ex) { 
-                    Console.WriteLine($"Not domain joined.");
+                catch (Exception) { 
+                    // Console.WriteLine($"Not domain joined.");
                     return null; 
                 }
             }
