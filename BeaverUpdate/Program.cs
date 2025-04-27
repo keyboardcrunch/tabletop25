@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Net.WebSockets;
 using System.Diagnostics;
 using System.Management;
+using
+
+using BeaverUpdate;
 
 namespace beaverUpdate
 {
@@ -24,16 +27,7 @@ namespace beaverUpdate
             }
 
             // Ensure we're tracking state
-            DatabaseHelper.EnsureTablesExist();
-
-            // Check if the fruit is ripe yet
-            DateTime lastRun = DatabaseHelper.GetLastRunTimestamp();
-            DatabaseHelper.LogRunEvent();
-            if (lastRun != DateTime.Now && DateTime.Now - lastRun < TimeSpan.FromSeconds(timerail))
-            {
-                Console.WriteLine($"Last run was less than {timerail} seconds ago.");
-                return;
-            }
+            var db = new DatabaseManager("syncstate.db");
 
             // Say hello to mother. 
             Console.WriteLine("Hello mother!");

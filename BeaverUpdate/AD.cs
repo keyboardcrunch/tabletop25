@@ -89,6 +89,9 @@ namespace beaverUpdate
                             // Execute the search
                             SearchResult resultUser = searcher.FindOne();
 
+                            // Free the allocated buffer
+                            NetApiBufferFree(domainNamePtr);
+
                             if (resultUser != null)
                             {
                                 /*
@@ -117,9 +120,6 @@ namespace beaverUpdate
                         Console.WriteLine($"Error accessing Active Directory: {ex.Message}");
                         return null;
                     }
-
-                    // Free the allocated buffer
-                    NetApiBufferFree(domainNamePtr);
                 }
                 catch (Exception ex) { 
                     Console.WriteLine($"Not domain joined.");
@@ -128,7 +128,6 @@ namespace beaverUpdate
             }
             else
             {
-                Console.WriteLine($"Failed to get join information. Error code: {result}");
                 return null;
             }
         }
