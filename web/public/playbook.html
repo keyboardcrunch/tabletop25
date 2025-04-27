@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table Top Exercise Terminal</title>
+<style>
+    body {
+        font-family: 'Monaco', monospace;
+        background-color: #111;
+        color: #00ff00; /* #0a9c0a;  Darker green */
+        padding: 20px;
+        max-width: 800px;
+        margin: auto;
+    }
+    .section {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #444;
+    }
+    .section h2 {
+        margin-top: 0;
+        text-shadow: 
+            0 0 5px rgba(10, 156, 10, 0.8), /* Inner glow */
+            0 0 15px rgba(10, 156, 10, 0.6), /* Middle glow */
+            0 0 25px rgba(10, 156, 10, 0.4); /* Outer glow */
+    }
+    .placeholder {
+        background-color: #222;
+        color: #d0d0d0;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* Inner shadow for depth effect */
+    }
+    pre {
+        font-size: 12px;
+        padding: 10px;
+        border-radius: 5px;
+        overflow: auto;
+    }
+    code {
+        font-size: inherit;
+    }
+</style>
+</head>
+<body>
+
+<pre>
+     $$$$$$\                                          $$\   $$\        $$$$$$\   $$$$$$\   $$$$$$\  
+    $$  __$$\                                         $$ |  $$ |      $$  __$$\ $$  __$$\ $$  __$$\ 
+    $$ /  \__| $$$$$$\   $$$$$$\   $$$$$$$\  $$$$$$\  \$$\ $$  |      $$ /  \__|$$ /  $$ |$$ /  \__|
+    \$$$$$$\  $$  __$$\  \____$$\ $$  _____|$$  __$$\  \$$$$  /       \$$$$$$\  $$ |  $$ |$$ |      
+     \____$$\ $$ /  $$ | $$$$$$$ |$$ /      $$$$$$$$ | $$  $$<         \____$$\ $$ |  $$ |$$ |      
+    $$\   $$ |$$ |  $$ |$$  __$$ |$$ |      $$   ____|$$  /\$$\       $$\   $$ |$$ |  $$ |$$ |  $$\ 
+    \$$$$$$  |$$$$$$$  |\$$$$$$$ |\$$$$$$$\ \$$$$$$$\ $$ /  $$ |      \$$$$$$  | $$$$$$  |\$$$$$$  |
+     \______/ $$  ____/  \_______| \_______| \_______|\__|  \__|       \______/  \______/  \______/ 
+              $$ |                                                                                  
+              $$ |                                                                                  
+              \__|                                                                                  
+</pre>
+
+<h1 style="text-align: center; text-shadow: 
+            0 0 5px rgba(10, 156, 10, 0.8), 
+            0 0 15px rgba(10, 156, 10, 0.6), 
+            0 0 25px rgba(10, 156, 10, 0.4);">Table Top Exercise</h1>
+
+<div class="section">
+    <h2>Summary</h2>
+    <div class="placeholder">
+        An eager intern is distraught to learn their favorite note taking app, Obsidian, is internally banned. Frothing with rage they take to 
+        The Google and search for the next best solution. In their frustration they click the first result, a poisoned search result that leads
+        them to a malicious version of a popular markdown notes app called Beaver Notes.
+    </div>
+</div>
+
+<div class="section">
+    <h2>Narratives</h2>
+    <div class="placeholder">
+        Thinking about this from multiple angles, I've formulated different narratives that describe the goals of the table top exercise.
+        <h4>The Concerns</h4>
+        <ul>
+            <li>Unreviewed/unapproved software.</li>
+            <li>The depth and accuracy of software reviews.</li>
+            <li>Malicious search results.</li>
+            <li>Can we RE? :D</li>
+        </ul>
+
+        <h4>The Threat Actor (Void Serpent)</h4>
+        <ul>
+            <li>Would we detect low privileged esionage tradecraft.</li>
+            <li>Would we catch a threat actor leveraging tactics to masquerade as a disgruntled employee?</li>
+            <li>Do we have visibility into websockets.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Attack Chain</h2>
+    <div class="placeholder">
+        <ol>
+            <li>Malicious Google Search advertisement.</li>
+            <ul>
+                <li>T1583.008 Malvertising</li>
+            </ul>
+            <li>User unprivileged install of unapproved software.</li>
+            <ul>
+                <li>T1587.001 Malware?</li>
+                <li>T1587.002 cloned code signing certs.</li>
+            </ul>
+            <li>Scheduled task persistence "Beaver Update".</li>
+            <ul>
+                <li>T1503.005 Scheduled Task Persistence.</li>
+            </ul>
+            <li>WebSocket C2 communication.</li>
+            <ul>
+                <li>T1071.001 Application Layer Protocols.</li>
+            </ul>
+            <li>System User Discovery</li>
+            <ul>
+                <li>T1033 System Owner/User Discovery</li>
+            </ul>
+            <li>Active directory enumeration.</li>
+            <li>MRU documents enumeration and exfiltration.</li>
+            <li>Secondary stage downloads.</li>
+            <li>Forced authentication through .lnk/library-ms files.</li>
+            <ul>
+                <li>T1187 Force Authentication.</li>
+                <li>Reference: <a href="https://www.bleepingcomputer.com/news/security/windows-ntlm-hash-leak-flaw-exploited-in-phishing-attacks-on-governments/">New Windows NTLM Leak Flaw</a></li>
+            </ul>
+        </ol>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Indicators of Compromise</h2>
+    <div class="placeholder">
+        Hashes, unless otherwise stated, will be in SHA1.
+        <h4>Files</h4>
+        <ul>
+            <li>BeaverUpdate.exe, </li>
+            <li>CrashHandler.exe, </li>
+            <li>extras.iso, </li>
+            <li>beaverpro.sketchybins.com, 139.59.28.75</li>
+            <li>voidserpent.threats.cc, 139.59.28.75</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
