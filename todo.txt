@@ -1,0 +1,9 @@
+:TODO
+## BeaverUpdater
+- error handling for websocket, really just get the whole CommSDK reworked and async
+- DatabaseHelper error handling for first db creation
+- Directory helper function to return true/false if domain exists
+- Add directory status to Utilities.protectedStart() to prevent running on non-domain joined machines
+
+## BeaverSync
+- Load job status from db, send anything in "collected" status and move it to "completed"
