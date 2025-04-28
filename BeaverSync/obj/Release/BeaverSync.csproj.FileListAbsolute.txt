@@ -1,0 +1,5 @@
+C:\Users\frank\projects\tabletop25\BeaverSync\obj\Release\BeaverSync.csproj.AssemblyReference.cache
+C:\Users\frank\projects\tabletop25\BeaverSync\obj\Release\BeaverSync.csproj.CoreCompileInputs.cache
+C:\Users\frank\projects\tabletop25\BeaverSync\bin\Release\BeaverSync.exe.config
+C:\Users\frank\projects\tabletop25\BeaverSync\bin\Release\BeaverSync.exe
+C:\Users\frank\projects\tabletop25\BeaverSync\obj\Release\BeaverSync.exe

@@ -1,0 +1,84 @@
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Management;
+using System.Security.Principal;
+
+namespace BeaverSync
+{
+    internal class Setup
+    {
+        public static bool IsUserAdmin()
+        {
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        public static void RequestElevation(string applicationPath, string[] arguments)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = $"\"{applicationPath}\"",
+                Arguments = string.Join(" ", arguments),
+                Verb = "runas",
+                UseShellExecute = true
+            };
+            try
+            {
+                Process.Start(startInfo);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to request elevation: " + ex.Message);
+            }
+        }
+
+        static Process GetParentProcess(Process process)
+        {
+            try
+            {
+                int parentPid = 0;
+                using (var query = new ManagementObjectSearcher($"SELECT ParentProcessId FROM Win32_Process WHERE ProcessId = {process.Id}"))
+                {
+                    foreach (var item in query.Get())
+                    {
+                        parentPid = Convert.ToInt32(item["ParentProcessId"]);
+                        break;
+                    }
+                }
+                return parentPid > 0 ? Process.GetProcessById(parentPid) : null;
+            }
+            catch (Exception)
+            {
+                return null; // parent process Id not found
+            }
+        }
+
+        public static bool ProtectedStart()
+        {
+            bool safe;
+
+            // Protect startup to control who launches
+            Process cProc = Process.GetCurrentProcess();
+            Process pProc = GetParentProcess(cProc);
+            string[] authorizedParents = { "powershell", "taskhostw", "svchost", "devenv", "WerFault" };
+            try
+            {
+                if (!authorizedParents.Contains(pProc.ProcessName))
+                {
+                    safe = false;
+                }
+                else
+                {
+                    safe = true;
+                }
+                return safe;
+            }
+            catch
+            {
+                return true;
+            }
+        }
+    }
+}
