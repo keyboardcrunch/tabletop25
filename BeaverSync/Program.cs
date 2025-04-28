@@ -48,6 +48,8 @@ namespace BeaverSync
                     string[] lpecmd = { "create", "bvSyncService", "displayName=", "bvSyncService", "binPath=", addcmd, "start=", "auto" };
                     RunCmd(process: "sc.exe", args: regcmd);
                     RunCmd(process: "sc.exe", args: lpecmd);
+
+                    // TODO: prompt for restart so service runs with privs
                 }
             }
             else if (args.Length == 1 && args[0] == "unregister")
