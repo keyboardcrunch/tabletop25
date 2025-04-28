@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace BeaverUpdate
 {
@@ -11,7 +8,6 @@ namespace BeaverUpdate
     {
         private string _databasePath;
         private SQLiteConnection _connection;
-        private const string DATABASE_PASSWORD = "voidserpent";
 
         public DatabaseManager(string databasePath)
         {
@@ -25,8 +21,7 @@ namespace BeaverUpdate
             {
                 var connectionStringBuilder = new SQLiteConnectionStringBuilder
                 {
-                    DataSource = _databasePath,
-                    Password = DATABASE_PASSWORD
+                    DataSource = _databasePath
                 };
 
                 using (var connection = new SQLiteConnection(connectionStringBuilder.ConnectionString))
@@ -184,6 +179,33 @@ namespace BeaverUpdate
             }
         }
 
+        public string GetJobStatus(string jobName) {
+            try
+            {
+                using (var connection = new SQLiteConnection(GetConnectionString()))
+                {
+                    connection.Open();
+                    var query = @"SELECT status FROM jobs WHERE name = @jobName";
+
+                    using (var command = new SQLiteCommand(query, connection))
+                    {
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return reader.GetString(0);
+                            }
+
+                        }
+                    }
+                    
+                }
+            }
+            catch {
+                return "pending";
+            }
+        }
+
         public List<string> GetJobs()
         {
             var jobNames = new List<string>();
@@ -212,8 +234,7 @@ namespace BeaverUpdate
         {
             var connectionStringBuilder = new SQLiteConnectionStringBuilder
             {
-                DataSource = _databasePath,
-                Password = DATABASE_PASSWORD
+                DataSource = _databasePath
             };
 
             return connectionStringBuilder.ConnectionString;

