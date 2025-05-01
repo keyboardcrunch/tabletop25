@@ -2,8 +2,6 @@ C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Release\beaverUpdate.exe.con
 C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Release\beaverUpdate.exe
 C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Release\beaverUpdate.pdb
 C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Release\System.Data.SQLite.dll
-C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Release\System.Data.SQLite.EF6.dll
-C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Release\System.Data.SQLite.Linq.dll
 C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Release\System.Data.SQLite.xml
 C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Release\beaverUpdate.csproj.AssemblyReference.cache
 C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Release\beaverUpdate.csproj.CoreCompileInputs.cache
