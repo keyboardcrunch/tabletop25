@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\frank\\projects\\tabletop25\\BeaverUpdate\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|beaverUpdate.csproj|C:\\Users\\frank\\projects\\tabletop25\\BeaverUpdate\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|beaverUpdate.csproj|c:\\users\\frank\\projects\\tabletop25\\beaverupdate\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|beaverUpdate.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|beaverUpdate.csproj|c:\\users\\frank\\projects\\tabletop25\\beaverupdate\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|beaverUpdate.csproj|C:\\Users\\frank\\projects\\tabletop25\\BeaverUpdate\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|beaverUpdate.csproj|solutionrelative:databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|beaverUpdate.csproj|c:\\users\\frank\\projects\\tabletop25\\beaverupdate\\directoryhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|beaverUpdate.csproj|solutionrelative:directoryhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|beaverUpdate.csproj|c:\\users\\frank\\projects\\tabletop25\\beaverupdate\\utilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|beaverUpdate.csproj|solutionrelative:utilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,21 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 270,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Utilities.cs",
-              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverUpdate\\Utilities.cs",
-              "RelativeDocumentMoniker": "Utilities.cs",
-              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverUpdate\\Utilities.cs",
-              "RelativeToolTip": "Utilities.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T03:33:31.109Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -49,7 +28,7 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverUpdate\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAQwBkAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-12T19:43:36.609Z",
               "EditorCaption": ""
@@ -62,29 +41,9 @@
               "RelativeDocumentMoniker": "DatabaseHelper.cs",
               "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverUpdate\\DatabaseHelper.cs",
               "RelativeToolTip": "DatabaseHelper.cs",
-              "ViewState": "AgIAALIAAAAAAAAAAAAowMUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMYAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T02:21:14.207Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 130,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DirectoryHelper.cs",
-              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverUpdate\\DirectoryHelper.cs",
-              "RelativeDocumentMoniker": "DirectoryHelper.cs",
-              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverUpdate\\DirectoryHelper.cs",
-              "RelativeToolTip": "DirectoryHelper.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T03:43:27.526Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-19T02:21:14.207Z"
             }
           ]
         }

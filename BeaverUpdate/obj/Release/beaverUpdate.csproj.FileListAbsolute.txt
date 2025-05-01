@@ -10,3 +10,4 @@ C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Release\beaverUpdate.csproj.
 C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Release\beaverUp.B898653E.Up2Date
 C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Release\beaverUpdate.exe
 C:\Users\frank\projects\tabletop25\BeaverUpdate\obj\Release\beaverUpdate.pdb
+C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Release\BeaverLib.dll

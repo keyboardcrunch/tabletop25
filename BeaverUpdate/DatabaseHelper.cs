@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 
@@ -179,7 +180,8 @@ namespace BeaverUpdate
             }
         }
 
-        public string GetJobStatus(string jobName) {
+        public string GetJobStatus(string jobName)
+        {
             try
             {
                 using (var connection = new SQLiteConnection(GetConnectionString()))
@@ -189,21 +191,26 @@ namespace BeaverUpdate
 
                     using (var command = new SQLiteCommand(query, connection))
                     {
+                        command.Parameters.AddWithValue("@jobName", jobName);
+
                         using (var reader = command.ExecuteReader())
                         {
-                            while (reader.Read())
+                            if (reader.Read())
                             {
                                 return reader.GetString(0);
                             }
-
                         }
                     }
-                    
                 }
             }
-            catch {
-                return "pending";
+            catch
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine("An error occurred while fetching job status.");
             }
+
+            // Return a default value or throw an exception
+            return "pending"; // or throw new Exception("Job not found");
         }
 
         public List<string> GetJobs()

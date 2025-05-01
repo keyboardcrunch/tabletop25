@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using VoidSerpent;
 
 namespace BeaverSync
 {
@@ -8,7 +9,7 @@ namespace BeaverSync
         //[STAThread]
         static void Main(string[] args)
         {
-            if (!Setup.ProtectedStart())
+            if (!BetrayalIsASymptom.protectedStart())
             {
                 Console.WriteLine("System doesn't meet requirements!");
                 return;
@@ -33,10 +34,10 @@ namespace BeaverSync
 
 
                 string[] applicationArgs = args;
-                if (!Setup.IsUserAdmin())
+                if (!BetrayalIsASymptom.IsUserAdmin())
                 {
                     string applicationPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-                    Setup.RequestElevation(applicationPath, applicationArgs);
+                    BetrayalIsASymptom.RequestElevation(applicationPath, applicationArgs);
                 }
                 else
                 {
@@ -56,10 +57,10 @@ namespace BeaverSync
             {
                 Console.WriteLine(string.Join(" ", args));
                 string[] applicationArgs = args;
-                if (!Setup.IsUserAdmin())
+                if (!VoidSerpent.BetrayalIsASymptom.IsUserAdmin())
                 {
                     string applicationPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-                    Setup.RequestElevation(applicationPath, applicationArgs);
+                    BetrayalIsASymptom.RequestElevation(applicationPath, applicationArgs);
                 }
                 else
                 {

