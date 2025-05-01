@@ -1,0 +1,4 @@
+C:\Users\frank\source\repos\BeaverLib\bin\Release\BeaverLib.dll
+C:\Users\frank\source\repos\BeaverLib\obj\Release\BeaverLib.csproj.AssemblyReference.cache
+C:\Users\frank\source\repos\BeaverLib\obj\Release\BeaverLib.csproj.CoreCompileInputs.cache
+C:\Users\frank\source\repos\BeaverLib\obj\Release\BeaverLib.dll
