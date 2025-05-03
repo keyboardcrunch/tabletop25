@@ -1,5 +1,6 @@
 #!/usr/bin/env -S deno run -A
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import { join } from "https://deno.land/std/path/mod.ts";
 
 const port = 8080;
 const app = new Application();
@@ -7,6 +8,26 @@ const router = new Router();
 const connectedClients = new Map();
 
 const approvedAgents = ["Deno/2.2.7", "BeaverUpdater", "websocket"];
+
+// Function to log messages to a file
+async function logToFile(message: string) {
+  const logFilePath = join(Deno.cwd(), "server.log"); // Define the path to your log file
+  try {
+      await Deno.writeTextFile(logFilePath, message + "\n", { append: true }); // Append the message to the log file
+  } catch (error) {
+      console.error("Failed to write to log file:", error);
+  }
+}
+
+// Save the original console.log
+const originalConsoleLog = console.log;
+
+// Replace console.log with a custom function
+console.log = (...args: any[]) => {
+  const message = args.map(arg => String(arg)).join(" "); // Convert all arguments to strings and join them
+  logToFile(message); // Write the message to the log file
+  originalConsoleLog(...args); // Optionally, still call the original console.log for debugging or other purposes
+};
 
 // send a message to all connected clients
 function broadcast(command:string) {
@@ -122,7 +143,7 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(async (context) => {
   await context.send({
-    root: `/web/public`,
+    root: join(Deno.cwd(), "/public"),
     index: "index.html",
   });
 });
