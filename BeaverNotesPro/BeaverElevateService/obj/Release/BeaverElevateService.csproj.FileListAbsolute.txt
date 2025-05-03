@@ -1,0 +1,9 @@
+C:\Users\frank\source\repos\BeaverElevateService\bin\Release\BeaverElevateService.exe.config
+C:\Users\frank\source\repos\BeaverElevateService\bin\Release\BeaverElevateService.exe
+C:\Users\frank\source\repos\BeaverElevateService\bin\Release\BeaverElevateService.pdb
+C:\Users\frank\source\repos\BeaverElevateService\obj\Release\BeaverElevateService.csproj.AssemblyReference.cache
+C:\Users\frank\source\repos\BeaverElevateService\obj\Release\BeaverElevateService.csproj.CoreCompileInputs.cache
+C:\Users\frank\source\repos\BeaverElevateService\obj\Release\BeaverElevateService.exe
+C:\Users\frank\source\repos\BeaverElevateService\obj\Release\BeaverElevateService.pdb
+C:\Users\frank\source\repos\BeaverElevateService\obj\Release\BeaverElevateService.ProjectInstaller.resources
+C:\Users\frank\source\repos\BeaverElevateService\obj\Release\BeaverElevateService.csproj.GenerateResource.cache
