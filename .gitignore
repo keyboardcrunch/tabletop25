@@ -3,3 +3,5 @@ deno.lock
 Installer/ProgramFiles/*
 web/public/downloads/RazerService.exe
 web/public/downloads/payload.exe
+web/server.log
+web/report.log
