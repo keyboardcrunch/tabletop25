@@ -15,4 +15,5 @@
 - Add BU command handler for "register" that roots the device
 - Add download/exec, exec assembly, A/V enumeration, host info dump to elevate service
 - make sure voidserpent server is up and ready to host payloads and accept uploads
+- tweak scheduled task creation to kill previous, constant restart hourly
 - rebuild and package everything
