@@ -42,7 +42,7 @@ function broadcast(command:string) {
   }
 }
 
-function handle_json(client: string, event: string, jsonStr: string) {
+function handle_json_list(client: string, event: string, jsonStr: string) {
   console.log(`--- ${event} event from ${client} ---`);
   const jsonData = JSON.parse(jsonStr);
   for (const item of jsonData) {
@@ -51,6 +51,12 @@ function handle_json(client: string, event: string, jsonStr: string) {
     }
     console.log("\r");
   }
+}
+
+function handle_json(client: string, event: string, jsonStr: string) {
+  console.log(`--- ${event} event from ${client} ---`);
+  const jsonData = JSON.parse(jsonStr);
+  console.log(jsonData);
 }
 
 // websocket fake update check
@@ -101,17 +107,18 @@ Headers: ${headers}
   socket.onmessage = (m) => {
     try {
       const data = JSON.parse(m.data);
-    // Need to setup an "update" handler that if a request is made on valid date, return true so "update" will perform offensive actions
-    // Need to setup an whales handler to accept json payload of {"executives": [], "purchasing": []} then save to kv
-
       switch (data.event) {
         case "message":
           console.log(`Client: ${client}, Message: ${data.message}`);
           break;
 
         case "email":
-          handle_json(client, "email", data.message);
+          handle_json_list(client, "email", data.message);
           break;
+        
+          case "json":
+            handle_json(client, "json", data.message);
+          break
         }
     } catch (error) {
       console.log(error);

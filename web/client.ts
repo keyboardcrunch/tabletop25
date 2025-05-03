@@ -21,7 +21,45 @@ socket.addEventListener("open", () => {
         }),
     );
     socket.close();
-  } 
+  } else if (args == "joke") {
+    const computerConfig = {
+      "computer": {
+        "manufacturer": "Dell",
+        "model": "XPS 15",
+        "serial_number": "XYZ1234567890",
+        "operating_system": {
+          "type": "Windows",
+          "version": "11 Pro"
+        },
+        "processor": {
+          "manufacturer": "Intel",
+          "model": "Core i7-1165G7",
+          "cores": 4,
+          "threads": 8
+        },
+        "memory": [
+          {
+            "size_gb": 16,
+            "type": "DDR4"
+          }
+        ],
+        "storage": [
+          {
+            "capacity_gb": 512,
+            "type": "SSD",
+            "model": "Samsung PM9A3"
+          }
+        ]
+      }
+    };
+    socket.send(
+      JSON.stringify({
+          event: "json",
+          message: JSON.stringify(computerConfig, null, 2)
+        }),
+    );
+    socket.close();
+  }
  });
 
 
