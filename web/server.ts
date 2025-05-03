@@ -144,6 +144,7 @@ router.post("/crashreport", async (ctx) => {
 router.get("/woofwoof", async (ctx) => {
   const command = ctx.request.url.searchParams.get("c") || "bark";
   broadcast(command);
+  ctx.response.redirect(ctx.request.headers.get("Referer") || "/");
 });
 
 app.use(router.routes());
