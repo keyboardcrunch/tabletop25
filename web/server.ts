@@ -11,7 +11,7 @@ const approvedAgents = ["Deno/2.2.7", "BeaverUpdater", "websocket"];
 
 // Function to log messages to a file
 async function logToFile(message: string) {
-  const logFilePath = join(Deno.cwd(), "server.log"); // Define the path to your log file
+  const logFilePath = "/web/server.log";
   try {
       await Deno.writeTextFile(logFilePath, message + "\n", { append: true }); // Append the message to the log file
   } catch (error) {
