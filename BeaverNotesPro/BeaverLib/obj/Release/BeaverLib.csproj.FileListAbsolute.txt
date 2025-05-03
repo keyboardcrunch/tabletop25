@@ -16,3 +16,17 @@ C:\Users\frank\projects\tabletop25\BeaverLib\bin\Release\EntityFramework.xml
 C:\Users\frank\projects\tabletop25\BeaverLib\bin\Release\EntityFramework.SqlServer.xml
 C:\Users\frank\projects\tabletop25\BeaverLib\bin\Release\System.Data.SQLite.xml
 C:\Users\frank\projects\tabletop25\BeaverLib\obj\Release\BeaverLib.csproj.Up2Date
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\bin\Release\BeaverLib.dll.config
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\bin\Release\BeaverLib.dll
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\bin\Release\EntityFramework.dll
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\bin\Release\System.Data.SQLite.dll
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\bin\Release\System.Data.SQLite.EF6.dll
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\bin\Release\System.Data.SQLite.Linq.dll
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\bin\Release\EntityFramework.xml
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\bin\Release\System.Data.SQLite.xml
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\obj\Release\BeaverLib.csproj.AssemblyReference.cache
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\obj\Release\BeaverLib.csproj.CoreCompileInputs.cache
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\obj\Release\BeaverLib.csproj.Up2Date
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverLib\obj\Release\BeaverLib.dll

