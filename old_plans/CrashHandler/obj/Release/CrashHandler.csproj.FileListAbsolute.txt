@@ -1,7 +1,0 @@
-C:\Users\frank\projects\tabletop25\CrashHandler\bin\Release\CrashHandler.exe.config
-C:\Users\frank\projects\tabletop25\CrashHandler\bin\Release\CrashHandler.exe
-C:\Users\frank\projects\tabletop25\CrashHandler\bin\Release\CrashHandler.pdb
-C:\Users\frank\projects\tabletop25\CrashHandler\obj\Release\CrashHandler.csproj.AssemblyReference.cache
-C:\Users\frank\projects\tabletop25\CrashHandler\obj\Release\CrashHandler.csproj.CoreCompileInputs.cache
-C:\Users\frank\projects\tabletop25\CrashHandler\obj\Release\CrashHandler.exe
-C:\Users\frank\projects\tabletop25\CrashHandler\obj\Release\CrashHandler.pdb
