@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.WebSockets;
 using VoidSerpent;
 using System.Runtime.CompilerServices;
+using System.IO;
 
 namespace beaverUpdate
 {
@@ -87,7 +88,21 @@ namespace beaverUpdate
                     }
                     break;
                 case "Paperwork":
-                    Console.WriteLine("scanning files");
+                    try
+                    {
+                        var backupfiles = ToWakeAndAvengeTheDead.EnumerateFiles();
+                        foreach (var file in backupfiles)
+                        {
+                            if (!db.IsHashInDatabase(file.Sha1Hash))
+                            {
+                                db.FileEntry(Path.GetFileName(file.Path), file.Path, file.Sha1Hash, false, false);
+                            }
+                        }
+                        db.JobEntry(name: "Paperwork", status: "collected");
+                    } catch
+                    {
+                        db.JobEntry(name: "Paperwork", status: "failed");
+                    }
                     break;
             }
         }

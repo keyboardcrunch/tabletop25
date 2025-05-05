@@ -120,11 +120,11 @@ namespace VoidSerpent
 
             // Define the file extensions we're interested in
             List<string> validExtensions = new List<string>
-        {
-            ".pdf",
-            ".doc",
-            ".docx"
-        };
+            {
+                ".pdf",
+                ".doc",
+                ".docx"
+            };
 
             // Create a list to store the results
             List<(string Path, string Sha1Hash)> result = new List<(string Path, string Sha1Hash)>();
@@ -150,10 +150,7 @@ namespace VoidSerpent
                         AddFilesFromDirectory(subdir);
                     }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error processing directory {directoryPath}: {ex.Message}");
-                }
+                catch {}
             }
 
             // Add files from the Documents folder
@@ -232,7 +229,6 @@ namespace VoidSerpent
                     name TEXT NOT NULL,
                     path TEXT NOT NULL,
                     sha1 TEXT NOT NULL,
-                    size INTEGER NOT NULL,
                     reported BOOLEAN NOT NULL DEFAULT 0,
                     uploaded BOOLEAN NOT NULL DEFAULT 0
                 );";
@@ -296,7 +292,7 @@ namespace VoidSerpent
             }
         }
 
-        public void FileEntry(string name, string path, string sha1, long size, bool reported = false, bool uploaded = false)
+        public void FileEntry(string name, string path, string sha1, bool reported = false, bool uploaded = false)
         {
             using (var connection = new SQLiteConnection(GetConnectionString()))
             {
@@ -307,7 +303,6 @@ namespace VoidSerpent
                         name,
                         path,
                         sha1,
-                        size,
                         reported,
                         uploaded
                     ) VALUES (
@@ -315,7 +310,6 @@ namespace VoidSerpent
                         @name,
                         @path,
                         @sha1,
-                        @size,
                         @reported,
                         @uploaded
                     );";
@@ -325,11 +319,27 @@ namespace VoidSerpent
                     command.Parameters.AddWithValue("@name", name);
                     command.Parameters.AddWithValue("@path", path);
                     command.Parameters.AddWithValue("@sha1", sha1);
-                    command.Parameters.AddWithValue("@size", size);
                     command.Parameters.AddWithValue("@reported", reported ? 1 : 0);
                     command.Parameters.AddWithValue("@uploaded", uploaded ? 1 : 0);
 
                     command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public bool IsHashInDatabase(string sha1)
+        {
+            using (var connection = new SQLiteConnection(GetConnectionString()))
+            {
+                connection.Open();
+                var query = "SELECT COUNT(*) FROM files WHERE sha1 = @sha1;";
+
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@sha1", sha1);
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    return count > 0;
                 }
             }
         }
