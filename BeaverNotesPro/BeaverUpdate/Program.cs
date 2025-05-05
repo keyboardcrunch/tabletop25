@@ -35,7 +35,6 @@ namespace beaverUpdate
             // Start the task flow
             List<string> userJobDone = new List<string>
             {
-                "collected",
                 "completed",
                 "failed"
             };
@@ -49,16 +48,14 @@ namespace beaverUpdate
             // Run through the tasks
             foreach (var task in tasks)
             {
-                Console.WriteLine($"{task}");
-                try // task has been run
+                try
                 {
                     string taskStatus = db.GetJobStatus(task);
-                    Console.WriteLine(taskStatus);
                     if (!userJobDone.Contains(taskStatus)) //task not completed
                     {
                         doTask(task);
                     }
-                } catch // task not previously run
+                } catch
                 {
                     doTask(task);
                 }
@@ -76,14 +73,12 @@ namespace beaverUpdate
                 case "Licensing":
                     try
                     {
-                        // Get the current user's active directory info, store to local db, record task
                         DirectoryHelper.UserInfo userInfo = DirectoryHelper.GetUserInfo();
                         db.DirectoryEntry(userInfo.UserName, userInfo.Name, userInfo.Email, userInfo.Title, userInfo.Department, userInfo.Manager);
                         db.JobEntry(name: "Licensing", status: "collected");
                     }
                     catch
                     {
-                        Console.WriteLine("Marking task failed");
                         db.JobEntry(name: "Licensing", status: "failed");
                     }
                     break;
