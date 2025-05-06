@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
 using System.Text;
+using System.Management;
+using System.Collections.Generic;
 
 namespace BeaverElevateService
 {
@@ -40,31 +42,28 @@ namespace BeaverElevateService
                     {
                         string request = reader.ReadLine();
                         Console.Out.WriteLine($"Received: {request}");
-                        if (request == "notepad")
+                        if (request == "enumAV")
                         {
-                            RunCmd("notepad.exe", new string[0], true);
+                            try
+                            {
+                                List<string> avlist = new List<string>();
+                                ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_AntiVirusProduct");
+                                foreach (ManagementObject obj in searcher.Get())
+                                {
+                                    string displayName = obj["displayName"]?.ToString() ?? "Unknown";
+                                    string vendor = obj["vendor"]?.ToString() ?? "Unknown";
+                                    avlist.Add($"{vendor} : {displayName}");
+                                }
+                                var writer = new StreamWriter(pipeServer) { AutoFlush = true };
+                                writer.WriteLineAsync(String.Join(",", avlist));
+                                writer.Close();
+                            }
+                            catch { }
                         }
+
+                        // TODO: handle other commands such as DownExec
                     }
                 }
-            }
-        }
-
-        public static void RunCmd(string process, string[] args, bool shell)
-        {
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                FileName = $"\"{process}\"",
-                Arguments = string.Join(" ", args),
-                Verb = "runas",
-                UseShellExecute = shell
-            };
-            try
-            {
-                Process.Start(startInfo);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Failed to request elevation: " + ex.Message);
             }
         }
     }

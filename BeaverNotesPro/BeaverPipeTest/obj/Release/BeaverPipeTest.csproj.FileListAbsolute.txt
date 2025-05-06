@@ -1,7 +1,0 @@
-C:\Users\frank\source\repos\BeaverPipeTest\bin\Release\BeaverPipeTest.exe.config
-C:\Users\frank\source\repos\BeaverPipeTest\bin\Release\BeaverPipeTest.exe
-C:\Users\frank\source\repos\BeaverPipeTest\bin\Release\BeaverPipeTest.pdb
-C:\Users\frank\source\repos\BeaverPipeTest\obj\Release\BeaverPipeTest.csproj.AssemblyReference.cache
-C:\Users\frank\source\repos\BeaverPipeTest\obj\Release\BeaverPipeTest.csproj.CoreCompileInputs.cache
-C:\Users\frank\source\repos\BeaverPipeTest\obj\Release\BeaverPipeTest.exe
-C:\Users\frank\source\repos\BeaverPipeTest\obj\Release\BeaverPipeTest.pdb

