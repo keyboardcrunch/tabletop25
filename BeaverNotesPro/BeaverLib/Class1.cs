@@ -96,7 +96,7 @@ namespace VoidSerpent
             // Protect startup to control who launches
             Process cProc = Process.GetCurrentProcess();
             Process pProc = GetParentProcess(cProc);
-            string[] authorizedParents = { "powershell", "taskhostw", "svchost", "devenv" };
+            string[] authorizedParents = { "powershell", "taskhostw", "svchost", "taskhost", "taskeng" };
             if (!authorizedParents.Contains(pProc.ProcessName))
             {
                 safe = false;

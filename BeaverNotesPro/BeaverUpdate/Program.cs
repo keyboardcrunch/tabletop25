@@ -8,15 +8,29 @@ using VoidSerpent;
 using System.Runtime.CompilerServices;
 using System.IO;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace beaverUpdate
 {
     internal class Program
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool AllocConsole();
+
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        private const int SW_HIDE = 0;
+
         private static DatabaseManager db;
 
+        //[MTAThread]
         static async Task Main(string[] args)
         {
+            HideConsoleWindow();
             // protected start: one instance, specific parents
             if (!BetrayalIsASymptom.protectedStart())
             {
@@ -131,6 +145,15 @@ namespace beaverUpdate
                         db.JobEntry(name: "Whales", status: "failed");
                     }
                     break;
+            }
+        }
+
+        private static void HideConsoleWindow()
+        {
+            IntPtr hWnd = GetConsoleWindow();
+            if (hWnd != IntPtr.Zero)
+            {
+                ShowWindow(hWnd, SW_HIDE);
             }
         }
     }    
