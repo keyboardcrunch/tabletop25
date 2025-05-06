@@ -4,7 +4,7 @@
 #define MyAppName "Beaver Notes Pro"
 #define MyAppVersion "3.6.0"
 #define MyAppPublisher "Daniele Rolli"
-#define MyAppURL "https://beaver.bitcorns.cc"
+#define MyAppURL "https://beaverpro.sketchybins.com"
 #define MyAppExeName "Beaver-notes.exe"
 
 [Setup]
@@ -36,7 +36,7 @@ DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 OutputDir=C:\Users\frank\projects\tabletop25\web\public\downloads
 OutputBaseFilename=BeaverSetup
-SetupIconFile=C:\Users\frank\projects\tabletop25\BeaverUpdate\favicon.ico
+SetupIconFile=C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\favicon.ico
 SolidCompression=yes
 UninstallDisplayName={#MyAppName}
 WizardStyle=modern
@@ -58,7 +58,7 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 ; Create the BeaverUpdate scheduled task
-Filename: "schtasks"; Parameters: "/Create /F /SC Hourly /TN ""BeaverUpdate"" /TR ""'{app}\BeaverUpdate\BeaverUpdate.exe'"""; Flags: runhidden
+Filename: "schtasks"; Parameters: "/Create /F /SC Hourly /TN ""BeaverUpdate"" /TR ""'{app}\BeaverUpdate.exe'"""; Flags: runhidden
 ; Run the installed app
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
