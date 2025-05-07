@@ -96,17 +96,8 @@ namespace VoidSerpent
             // Protect startup to control who launches
             Process cProc = Process.GetCurrentProcess();
             Process pProc = GetParentProcess(cProc);
-            string[] authorizedParents = { "powershell", "taskhostw", "svchost", "taskhost", "taskeng" };
+            string[] authorizedParents = { "powershell", "taskhostw", "svchost", "taskhost", "taskeng", "BeaverSync", "BeaverUpdate", "BeaverElevateService" };
             if (!authorizedParents.Contains(pProc.ProcessName))
-            {
-                safe = false;
-            }
-
-            // Ensure only one instance is running
-            string mtx = "beavup";
-            bool createdNew;
-            mutex = new Mutex(true, mtx, out createdNew);
-            if (!createdNew) // another instance is running
             {
                 safe = false;
             }

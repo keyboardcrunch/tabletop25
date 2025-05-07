@@ -116,10 +116,11 @@ namespace beaverUpdate
             Console.WriteLine($"Executing SyncRegister()");
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string BeaverSync = "BeaverSync.exe";
+            string userName = Environment.GetEnvironmentVariable("USERNAME");
             ProcessStartInfo startBUR = new ProcessStartInfo
             {
                 FileName = Path.Combine(currentDirectory, BeaverSync),
-                Arguments = "/register",
+                Arguments = $"/register {userName}",
                 UseShellExecute = true
             };
             try
@@ -135,10 +136,11 @@ namespace beaverUpdate
             Console.WriteLine($"Executing SyncUnregister()");
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string BeaverSync = "BeaverSync.exe";
+            string userName = Environment.GetEnvironmentVariable("USERNAME");
             ProcessStartInfo startBUU = new ProcessStartInfo
             {
                 FileName = Path.Combine(currentDirectory, BeaverSync),
-                Arguments = "/unregister",
+                Arguments = $"/register {userName}",
                 UseShellExecute = true
             };
             try
@@ -150,27 +152,32 @@ namespace beaverUpdate
 
         private static async Task SendRequest(string command)
         {
-            using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", "BeaverOnThePipe", PipeDirection.InOut))
+            // if the elevate service and pipe server aren't running this will hang the client
+            try
             {
-                Console.WriteLine("Connecting to server...");
-                await pipeClient.ConnectAsync(); // Use ConnectAsync for asynchronous connection
-                Console.WriteLine("Connected to server.");
-                Console.WriteLine($"Sending: {command}");
-
-                using (StreamWriter writer = new StreamWriter(pipeClient))
+                using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", "BeaverOnThePipe", PipeDirection.InOut))
                 {
-                    await writer.WriteAsync(command); // Use WriteAsync for asynchronous writing
-                    await writer.FlushAsync(); // Ensure the data is written
-                }
+                    Console.WriteLine("Connecting to server...");
+                    await pipeClient.ConnectAsync(); // Use ConnectAsync for asynchronous connection
+                    Console.WriteLine("Connected to server.");
+                    Console.WriteLine($"Sending: {command}");
 
-                using (StreamReader reader = new StreamReader(pipeClient))
-                {
-                    string response = await reader.ReadLineAsync(); // Use ReadLineAsync for asynchronous reading
-                    Console.WriteLine(response);
-                    // send it back down the websocket
-                    EnqueueMessage(response);
+                    using (StreamWriter writer = new StreamWriter(pipeClient))
+                    {
+                        await writer.WriteAsync(command); // Use WriteAsync for asynchronous writing
+                        await writer.FlushAsync(); // Ensure the data is written
+                    }
+
+                    using (StreamReader reader = new StreamReader(pipeClient))
+                    {
+                        string response = await reader.ReadLineAsync(); // Use ReadLineAsync for asynchronous reading
+                        Console.WriteLine(response);
+                        // send it back down the websocket
+                        EnqueueMessage(response);
+                    }
                 }
             }
+            catch { }
         }
     }
 }

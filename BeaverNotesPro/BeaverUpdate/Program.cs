@@ -28,8 +28,16 @@ namespace beaverUpdate
 
         static async Task Main(string[] args)
         {
-            HideConsoleWindow();
-            
+            //HideConsoleWindow();
+
+            // Ensure only one instance is running
+            string mtx = "beavup";
+            var mutex = new Mutex(true, mtx, out bool createdNew);
+            if (!createdNew) // another instance is running
+            {
+                Environment.Exit(100);
+            }
+
             // protected start: one instance, specific parents
             if (!BetrayalIsASymptom.protectedStart())
             {

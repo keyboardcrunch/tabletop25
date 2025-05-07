@@ -60,21 +60,21 @@ namespace BeaverSync
             }
             else if (args.Length == 1 && args[0] == "register")
             {
-                // error, needs a username for second argument
-                Console.WriteLine("something bad happened with register");
-                Console.ReadLine();
+                Console.WriteLine("Username not specified with registration command!");
                 return;
             }
             else if (args.Length == 2 && args[0] == "register")
             {
                 Console.WriteLine(string.Join(" ", args));
 
-
+                Console.ReadLine();
                 string[] applicationArgs = args;
                 if (!BetrayalIsASymptom.IsUserAdmin())
                 {
                     string applicationPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
                     BetrayalIsASymptom.RequestElevation(applicationPath, applicationArgs);
+                    Console.WriteLine("elevating");
+                    Console.ReadLine();
                 }
                 else
                 {
@@ -131,7 +131,7 @@ namespace BeaverSync
                     */
                 }
             }
-            else if (args.Length == 1 && args[0] == "unregister")
+            else if (args.Length == 2 && args[0] == "unregister")
             {
                 Console.WriteLine(string.Join(" ", args));
                 string[] applicationArgs = args;
