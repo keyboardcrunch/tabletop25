@@ -24,7 +24,6 @@ namespace beaverUpdate
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         private const int SW_HIDE = 0;
-
         private static DatabaseManager db;
 
         static async Task Main(string[] args)
