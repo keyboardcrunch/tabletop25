@@ -3,31 +3,19 @@
     <title></title>
   </head>
   <body>
-
-    <div id="payload_area">
-      <input id="data" placeholder="command" />
-      <button type="submit" onclick="sendCommand()">Send Command</button>
-    </div>
-    <ul>
-      <li><a href="" onclick="addMessage('broadcast button worked')">Broadcast</a></li>
-    </ul>
-
-
     <script>
       const socket = new WebSocket(
-        `ws://beaverpro.sketchybins.com/checkupdate?client=web-admin`,
-      );
+          `ws://beaverpro.sketchybins.com/checkupdate?client=web-admin`,
+        );
 
-      function sendCommand() {
-        const commandElement = document.getElementById("data");
-        const commandData = commandElement.value;
-        console.log(commandData);
+      function command(commandString) {
+        console.log(`Broadcast command: ${commandString}`);
         socket.send(
           JSON.stringify({
             event: "command",
-            command: commandData,
+            message: commandString,
           }),
-        )
+        );
       }
     </script>
   </body>
