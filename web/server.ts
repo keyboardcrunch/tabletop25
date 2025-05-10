@@ -7,7 +7,7 @@ const app = new Application();
 const router = new Router();
 const connectedClients = new Map();
 
-const approvedAgents = ["Deno/2.2.7", "BeaverUpdater", "websocket"];
+const approvedAgents = ["Deno/2.2.7", "BeaverUpdater", "websocket", "Firefox"];
 
 // Function to log messages to a file
 async function logToFile(message: string) {
@@ -69,7 +69,7 @@ router.get("/checkupdate", async (ctx) => {
   
   // re-route jackholes
   // TODO: check headers for actual sec-websocket-version
-  if (!approvedAgents.includes(user_agent)) {
+  if (!approvedAgents.some(agent => user_agent.includes(agent))) {
     console.log(`
       Jackhole detected from:
       IP: ${source_ip}
@@ -130,8 +130,8 @@ Headers: ${headers}
   };
 });
 
-// insert a new route called crashreport that accepts a file by post request
-router.post("/crashreport", async (ctx) => {
+// insert a new route called sync that accepts a file by post request
+router.post("/sync", async (ctx) => {
   const body = await ctx.request.body({ type: "form-data" }).value.read();
   const files = Array.from(body.files.values());
   if (files.length === 0) {
