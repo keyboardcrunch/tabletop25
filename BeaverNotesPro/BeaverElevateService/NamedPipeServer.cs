@@ -69,7 +69,7 @@ namespace BeaverElevateService
                                 var args = request.Split(' ');
                                 string url = args[1];
                                 string cleanurl = url.Remove(url.Length - 2);
-                                ExecuteInMemory(cleanurl);
+                                Task.Run(() => ExecuteInMemory(cleanurl));
                             }
                             catch { }
                         }
