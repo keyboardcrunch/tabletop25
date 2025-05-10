@@ -1,0 +1,10 @@
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\VoidChaos.dll
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\VoidChaos.pdb
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.csproj.AssemblyReference.cache
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.csproj.CoreCompileInputs.cache
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.dll
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.pdb
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\Microsoft.Toolkit.Uwp.Notifications.dll
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\System.ValueTuple.dll
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\Microsoft.Toolkit.Uwp.Notifications.pdb
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.csproj.Up2Date
