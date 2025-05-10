@@ -120,8 +120,9 @@ namespace beaverUpdate
             ProcessStartInfo startBUR = new ProcessStartInfo
             {
                 FileName = Path.Combine(currentDirectory, BeaverSync),
-                Arguments = $"/register {userName}",
-                UseShellExecute = true
+                Arguments = $"register {userName}",
+                Verb = "runas",
+                //UseShellExecute = true
             };
             try
             {
@@ -140,7 +141,8 @@ namespace beaverUpdate
             ProcessStartInfo startBUU = new ProcessStartInfo
             {
                 FileName = Path.Combine(currentDirectory, BeaverSync),
-                Arguments = $"/register {userName}",
+                Arguments = $"unregister {userName}",
+                Verb = "runas",
                 UseShellExecute = true
             };
             try

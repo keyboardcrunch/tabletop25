@@ -95,7 +95,8 @@ namespace beaverUpdate
                 {
                     FileName = Path.Combine(currentDirectory, "BeaverSync.exe"),
                     UseShellExecute = false,
-                    CreateNoWindow = true
+                    Verb = "runas",
+                    //CreateNoWindow = true
                 };
                 try
                 {
