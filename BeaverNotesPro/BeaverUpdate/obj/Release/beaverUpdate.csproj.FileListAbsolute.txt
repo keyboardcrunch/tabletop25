@@ -12,7 +12,6 @@ C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Release\BeaverLib.dll
 C:\Users\frank\projects\tabletop25\BeaverUpdate\bin\Release\BeaverLib.dll.config
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\bin\Release\beaverUpdate.exe.config
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\bin\Release\beaverUpdate.exe
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\bin\Release\beaverUpdate.pdb
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\bin\Release\BeaverLib.dll
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\bin\Release\Newtonsoft.Json.dll
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\bin\Release\System.Data.SQLite.dll
@@ -23,4 +22,3 @@ C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\obj\Release\beave
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\obj\Release\beaverUpdate.csproj.CoreCompileInputs.cache
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\obj\Release\beaverUp.B898653E.Up2Date
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\obj\Release\beaverUpdate.exe
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverUpdate\obj\Release\beaverUpdate.pdb

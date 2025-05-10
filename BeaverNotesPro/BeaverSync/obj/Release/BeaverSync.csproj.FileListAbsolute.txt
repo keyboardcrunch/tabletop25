@@ -12,7 +12,6 @@ C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\bin\Release\BeaverS
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\bin\Release\BeaverSync.exe
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\bin\Release\BeaverLib.dll
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\bin\Release\System.Data.SQLite.dll
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\bin\Release\BeaverLib.dll.config
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\bin\Release\System.Data.SQLite.xml
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\obj\Release\BeaverSync.csproj.AssemblyReference.cache
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\BeaverSync\obj\Release\BeaverSync.csproj.CoreCompileInputs.cache

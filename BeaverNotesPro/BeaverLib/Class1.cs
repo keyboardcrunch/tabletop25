@@ -40,8 +40,6 @@ namespace VoidSerpent
     
     public static class BetrayalIsASymptom
     {
-
-        private static Mutex mutex = null;
         public static bool IsUserAdmin()
         {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
@@ -200,7 +198,7 @@ namespace VoidSerpent
     public class DatabaseManager
     {
         private string _databasePath;
-        private SQLiteConnection _connection;
+        //private SQLiteConnection _connection;
 
         public DatabaseManager(string databasePath)
         {

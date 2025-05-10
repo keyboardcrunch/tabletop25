@@ -84,6 +84,11 @@ namespace beaverUpdate
                                     Console.WriteLine($"Received: {receivedText}");
                                     await Task.Run(() => SendRequest(receivedText));
                                 }
+                                else if (receivedText.Contains("chaos"))
+                                {
+                                    Console.WriteLine($"Received: {receivedText}");
+                                    await Task.Run(() => SendRequest(receivedText));
+                                }
                                 else
                                 {
                                     Console.WriteLine($"Unknown command received: {receivedText}");
@@ -159,9 +164,8 @@ namespace beaverUpdate
             {
                 using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", "BeaverOnThePipe", PipeDirection.InOut))
                 {
-                    Console.WriteLine("Connecting to server...");
                     await pipeClient.ConnectAsync(); // Use ConnectAsync for asynchronous connection
-                    Console.WriteLine("Connected to server.");
+                    Console.WriteLine("Connected to NP server!");
                     Console.WriteLine($"Sending: {command}");
 
                     using (StreamWriter writer = new StreamWriter(pipeClient))

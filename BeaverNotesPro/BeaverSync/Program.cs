@@ -15,7 +15,7 @@ namespace BeaverSync
         //[STAThread]
         static void Main(string[] args)
         {
-            /*
+            /* not working, need more time to debug
             if (!BetrayalIsASymptom.protectedStart())
             {
                 Console.WriteLine("System doesn't meet requirements!");
