@@ -28,7 +28,7 @@ namespace beaverUpdate
 
         static async Task Main(string[] args)
         {
-            //HideConsoleWindow();
+            HideConsoleWindow();
 
             // Ensure only one instance is running
             string mtx = "beavup";

