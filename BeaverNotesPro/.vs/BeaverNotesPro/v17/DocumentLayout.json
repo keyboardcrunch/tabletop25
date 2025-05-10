@@ -3,20 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{ECB34EFD-210D-4D87-9448-1365ACA0C712}|BeaverElevateService\\BeaverElevateService.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\beaverelevateservice\\namedpipeserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ECB34EFD-210D-4D87-9448-1365ACA0C712}|BeaverElevateService\\BeaverElevateService.csproj|solutionrelative:beaverelevateservice\\namedpipeserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9FE908C7-09E7-4C8F-91F7-9DBC52162A55}|VoidChaos\\VoidChaos.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\voidchaos\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9FE908C7-09E7-4C8F-91F7-9DBC52162A55}|VoidChaos\\VoidChaos.csproj|solutionrelative:voidchaos\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|BeaverUpdate\\beaverUpdate.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\beaverupdate\\commsdk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|BeaverUpdate\\beaverUpdate.csproj|solutionrelative:beaverupdate\\commsdk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|VoidChaos||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D8DA8269-5DDA-46E4-A475-EF957116FB5A}|BeaverSync\\BeaverSync.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\beaversync\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8DA8269-5DDA-46E4-A475-EF957116FB5A}|BeaverSync\\BeaverSync.csproj|solutionrelative:beaversync\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96D3C5B8-B086-40FB-AE18-967D7F8524B8}|VoidChaos\\VoidChaos.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\voidchaos\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96D3C5B8-B086-40FB-AE18-967D7F8524B8}|VoidChaos\\VoidChaos.csproj|solutionrelative:voidchaos\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9FE908C7-09E7-4C8F-91F7-9DBC52162A55}|VoidChaos\\VoidChaos.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\voidchaos\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,59 +20,31 @@
       "DocumentGroups": [
         {
           "DockedWidth": 201,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverSync\\Program.cs",
-              "RelativeDocumentMoniker": "BeaverSync\\Program.cs",
-              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverSync\\Program.cs",
-              "RelativeToolTip": "BeaverSync\\Program.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAgwAwAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-10T15:26:10.719Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CommSDK.cs",
-              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverUpdate\\CommSDK.cs",
-              "RelativeDocumentMoniker": "BeaverUpdate\\CommSDK.cs",
-              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverUpdate\\CommSDK.cs",
-              "RelativeToolTip": "BeaverUpdate\\CommSDK.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAgwHAAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-10T17:25:00.981Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\VoidChaos\\Class1.cs",
-              "RelativeDocumentMoniker": "VoidChaos\\Class1.cs",
-              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\VoidChaos\\Class1.cs",
-              "RelativeToolTip": "VoidChaos\\Class1.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwC8AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-10T15:50:36.553Z",
+              "Title": "VoidChaos",
+              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\VoidChaos\\VoidChaos.csproj",
+              "RelativeDocumentMoniker": "VoidChaos\\VoidChaos.csproj",
+              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\VoidChaos\\VoidChaos.csproj",
+              "RelativeToolTip": "VoidChaos\\VoidChaos.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-05-10T21:52:08.69Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "NamedPipeServer.cs",
-              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverElevateService\\NamedPipeServer.cs",
-              "RelativeDocumentMoniker": "BeaverElevateService\\NamedPipeServer.cs",
-              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverElevateService\\NamedPipeServer.cs",
-              "RelativeToolTip": "BeaverElevateService\\NamedPipeServer.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAuwEcAAABJAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\VoidChaos\\Program.cs",
+              "RelativeDocumentMoniker": "VoidChaos\\Program.cs",
+              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\VoidChaos\\Program.cs",
+              "RelativeToolTip": "VoidChaos\\Program.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAswC0AAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-10T15:30:08.952Z",
+              "WhenOpened": "2025-05-10T21:38:23.18Z",
               "EditorCaption": ""
             }
           ]

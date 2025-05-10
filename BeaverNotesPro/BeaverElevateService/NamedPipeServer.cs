@@ -36,8 +36,6 @@ namespace BeaverElevateService
                 0, // OutBufferSize
                 pipeSecurity))
                 {
-                    
-
                     Console.Out.WriteLine("Waiting for a client connection...");
                     pipeServer.WaitForConnection();
                     Console.Out.WriteLine("Client connected.");

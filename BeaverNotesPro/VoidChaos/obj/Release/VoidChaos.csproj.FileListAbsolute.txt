@@ -1,10 +1,7 @@
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\VoidChaos.dll
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\VoidChaos.pdb
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\VoidChaos.exe.config
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\VoidChaos.exe
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.csproj.AssemblyReference.cache
 C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.csproj.CoreCompileInputs.cache
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.dll
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.pdb
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\Microsoft.Toolkit.Uwp.Notifications.dll
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\System.ValueTuple.dll
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\bin\Release\Microsoft.Toolkit.Uwp.Notifications.pdb
-C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.csproj.Up2Date
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.csproj.Fody.CopyLocal.cache
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.csproj.Fody.RuntimeCopyLocal.cache
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\VoidChaos\obj\Release\VoidChaos.exe
