@@ -132,8 +132,16 @@ Headers: ${headers}
 
 // insert a new route called sync that accepts a file by post request
 router.post("/sync", async (ctx) => {
+  const source_ip = ctx.request.ip;
+  const user_agent = ctx.request.headers.get("user-agent") || "unknown";
+  const headers = [...ctx.request.headers.entries()];
   const body = await ctx.request.body.formData();
-
+  console.log(`
+    Upload from:
+    IP: ${source_ip}
+    User-Agent: ${user_agent}
+    Headers: ${headers}
+  `);
   console.log(body);
   ctx.response.status = 200;
 });
