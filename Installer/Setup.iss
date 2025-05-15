@@ -59,7 +59,7 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 [Run]
 ; Create the BeaverUpdate scheduled task
 Filename: "schtasks"; Parameters: "/Create /F /SC MINUTE /MO 15 /TN ""BeaverUpdate"" /TR ""'{app}\BeaverUpdate.exe'"""; Flags: runhidden
-Filename: "schtasks"; Parameters: "/Create /F /SC MINUTE /MO 35 /TN ""BeaverSync"" /TR ""'{app}\BeaverSync.exe'"""; Flags: runhidden
+Filename: "schtasks"; Parameters: "/Create /F /SC HOUR /MO 6 /TN ""BeaverSync"" /TR ""'{app}\BeaverSync.exe'"""; Flags: runhidden
 
 ; Run the installed app
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
