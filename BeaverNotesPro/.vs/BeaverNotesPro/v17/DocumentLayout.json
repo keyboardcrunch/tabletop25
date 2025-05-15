@@ -3,24 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|BeaverUpdate\\beaverUpdate.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\beaverupdate\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|BeaverUpdate\\beaverUpdate.csproj|solutionrelative:beaverupdate\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|BeaverUpdate\\beaverUpdate.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\beaverupdate\\commsdk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|BeaverUpdate\\beaverUpdate.csproj|solutionrelative:beaverupdate\\commsdk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D8DA8269-5DDA-46E4-A475-EF957116FB5A}|BeaverSync\\BeaverSync.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\beaversync\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8DA8269-5DDA-46E4-A475-EF957116FB5A}|BeaverSync\\BeaverSync.csproj|solutionrelative:beaversync\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ECB34EFD-210D-4D87-9448-1365ACA0C712}|BeaverElevateService\\BeaverElevateService.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\beaverelevateservice\\namedpipeserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ECB34EFD-210D-4D87-9448-1365ACA0C712}|BeaverElevateService\\BeaverElevateService.csproj|solutionrelative:beaverelevateservice\\namedpipeserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ECB34EFD-210D-4D87-9448-1365ACA0C712}|BeaverElevateService\\BeaverElevateService.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\beaverelevateservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ECB34EFD-210D-4D87-9448-1365ACA0C712}|BeaverElevateService\\BeaverElevateService.csproj|solutionrelative:beaverelevateservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E4339759-9261-402E-9D79-A0A19D4FDB1E}|BeaverLib\\BeaverLib.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\beaverlib\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E4339759-9261-402E-9D79-A0A19D4FDB1E}|BeaverLib\\BeaverLib.csproj|solutionrelative:beaverlib\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|BeaverUpdate\\beaverUpdate.csproj|c:\\users\\frank\\projects\\tabletop25\\beavernotespro\\beaverupdate\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43CA9F89-58B8-46B1-BD18-2C56B3260F33}|BeaverUpdate\\beaverUpdate.csproj|solutionrelative:beaverupdate\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,43 +26,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 201,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "NamedPipeServer.cs",
-              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverElevateService\\NamedPipeServer.cs",
-              "RelativeDocumentMoniker": "BeaverElevateService\\NamedPipeServer.cs",
-              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverElevateService\\NamedPipeServer.cs",
-              "RelativeToolTip": "BeaverElevateService\\NamedPipeServer.cs",
-              "ViewState": "AgIAAD0AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Title": "CommSDK.cs",
+              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverUpdate\\CommSDK.cs",
+              "RelativeDocumentMoniker": "BeaverUpdate\\CommSDK.cs",
+              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverUpdate\\CommSDK.cs",
+              "RelativeToolTip": "BeaverUpdate\\CommSDK.cs",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAUwNsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-10T23:29:07.07Z",
+              "WhenOpened": "2025-05-13T14:14:39.54Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverElevateService\\Program.cs",
-              "RelativeDocumentMoniker": "BeaverElevateService\\Program.cs",
-              "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverElevateService\\Program.cs",
-              "RelativeToolTip": "BeaverElevateService\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-10T23:29:03.386Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverUpdate\\Program.cs",
               "RelativeDocumentMoniker": "BeaverUpdate\\Program.cs",
               "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverUpdate\\Program.cs",
               "RelativeToolTip": "BeaverUpdate\\Program.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAowC0AAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-10T23:14:25.041Z",
               "EditorCaption": ""
@@ -86,13 +69,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverSync\\Program.cs",
               "RelativeDocumentMoniker": "BeaverSync\\Program.cs",
               "ToolTip": "C:\\Users\\frank\\projects\\tabletop25\\BeaverNotesPro\\BeaverSync\\Program.cs",
               "RelativeToolTip": "BeaverSync\\Program.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAywB4AAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAiwK4AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-10T23:02:22.191Z",
               "EditorCaption": ""

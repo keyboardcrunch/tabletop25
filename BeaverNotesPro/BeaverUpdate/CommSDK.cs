@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.WebSockets;
+using System.Net.Http;
 using System.Threading;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
@@ -184,6 +185,40 @@ namespace beaverUpdate
                 }
             }
             catch { }
+        }
+
+    }
+
+    public class WebRequestHelper
+    {
+        // The HttpClient instance is shared among all calls
+        private static readonly HttpClient client = new HttpClient();
+
+        // Set the timeout to 2 minutes (120 seconds)
+        private static readonly TimeSpan timeout = TimeSpan.FromMinutes(2);
+
+        public static async Task<string> PerformWebRequestAsync(string uri)
+        {
+            try
+            {
+                using (var request = new HttpRequestMessage(HttpMethod.Get, uri))
+                {
+                    // Set the Keep-Alive header to true for 2 minutes
+                    request.Headers.Connection.Add("Keep-Alive");
+                    request.Headers.ConnectionClose = false;
+
+                    // Send the request asynchronously with a timeout
+                    var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+                    response.EnsureSuccessStatusCode();
+
+                    // Read the response content as a string
+                    return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                throw;
+            }
         }
     }
 }
