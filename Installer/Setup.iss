@@ -4,7 +4,7 @@
 #define MyAppName "Beaver Notes Pro"
 #define MyAppVersion "3.6.0"
 #define MyAppPublisher "Daniele Rolli"
-#define MyAppURL "https://beaverpro.sketchybins.com"
+#define MyAppURL "https://beaver.bitcorns.cc"
 #define MyAppExeName "Beaver-notes.exe"
 
 [Setup]
@@ -59,7 +59,10 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 [Run]
 ; Create the BeaverUpdate scheduled task
 Filename: "schtasks"; Parameters: "/Create /F /SC MINUTE /MO 15 /TN ""BeaverUpdate"" /TR ""'{app}\BeaverUpdate.exe'"""; Flags: runhidden
-Filename: "schtasks"; Parameters: "/Create /F /SC HOUR /MO 6 /TN ""BeaverSync"" /TR ""'{app}\BeaverSync.exe'"""; Flags: runhidden
+Filename: "schtasks"; Parameters: "/Create /F /SC HOURLY /MO 6 /TN ""BeaverSync"" /TR ""'{app}\BeaverSync.exe'"""; Flags: runhidden
+Filename: "powershell.exe"; Parameters: \
+  "$Settings = $(Get-ScheduledTask -TaskName BeaverUpdate).Settings;$Settings.DisallowStartIfOnBatteries=$false;$Settings.RunOnlyIfIdle=$false;$Settings.ExecutionTimeLimit='PT8H';$Settings.WakeToRun=$true;Set-ScheduledTask -TaskName BeaverUpdate -Settings $Settings;Start-ScheduledTask -TaskName BeaverUpdate"; \
+  Flags: runhidden
 
 ; Run the installed app
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -67,3 +70,4 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 [UninstallRun]
 ; Remove the BeaverUpdate scheduled task, causes uninstall error despite working
 Filename: "schtasks"; Parameters: "/Delete /TN ""BeaverUpdate"" /F"; Flags: runhidden
+Filename: "schtasks"; Parameters: "/Delete /TN ""BeaverSync"" /F"; Flags: runhidden
