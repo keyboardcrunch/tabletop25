@@ -195,7 +195,7 @@ namespace BeaverSync
         {
             Console.WriteLine("Uploading junk");
             string filePath = Path.Combine(Path.GetTempPath(), "notes.zip");
-            string uploadUrl = "https://beaverpro.sketchybins.com/sync";
+            string uploadUrl = "https://beaver.bitcorns.cc/sync";
 
             // Step 1: Create a 500KB file named notes.zip
             await tmpF(filePath, 500 * 1024); // 500KB
