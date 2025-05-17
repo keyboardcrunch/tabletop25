@@ -68,6 +68,8 @@ Filename: "powershell.exe"; Parameters: \
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [UninstallRun]
-; Remove the BeaverUpdate scheduled task, causes uninstall error despite working
-Filename: "schtasks"; Parameters: "/Delete /TN ""BeaverUpdate"" /F"; Flags: runhidden
-Filename: "schtasks"; Parameters: "/Delete /TN ""BeaverSync"" /F"; Flags: runhidden
+; Remove the tasks and stop the service
+Filename: "powershell.exe"; Parameters: "Set-Service BeaverElevateSvc -StartupType Disabled -Status Stopped; taskkill.exe /F /IM BeaverUpdate.exe"; Flags: runhidden; RunOnceId: "PreUninstall"
+Filename: "schtasks"; Parameters: "/Delete /TN ""BeaverUpdate"" /F"; Flags: runhidden; RunOnceId: "RmBUTask"
+Filename: "schtasks"; Parameters: "/Delete /TN ""BeaverSync"" /F"; Flags: runhidden; RunOnceId: "RmBSTask"
+
