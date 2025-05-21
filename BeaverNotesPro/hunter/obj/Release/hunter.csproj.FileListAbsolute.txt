@@ -1,0 +1,9 @@
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\hunter\bin\Release\hunter.exe.config
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\hunter\bin\Release\hunter.exe
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\hunter\bin\Release\Newtonsoft.Json.xml
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\hunter\obj\Release\hunter.csproj.AssemblyReference.cache
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\hunter\obj\Release\hunter.csproj.CoreCompileInputs.cache
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\hunter\obj\Release\hunter.csproj.Fody.CopyLocal.cache
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\hunter\obj\Release\hunter.csproj.Fody.RuntimeCopyLocal.cache
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\hunter\obj\Release\hunter.csproj.Up2Date
+C:\Users\frank\projects\tabletop25\BeaverNotesPro\hunter\obj\Release\hunter.exe
