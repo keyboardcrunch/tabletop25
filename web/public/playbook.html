@@ -61,7 +61,7 @@
 <h1 style="text-align: center; text-shadow: 
             0 0 5px rgba(10, 156, 10, 0.8), 
             0 0 15px rgba(10, 156, 10, 0.6), 
-            0 0 25px rgba(10, 156, 10, 0.4);">Table Top Exercise</h1>
+            0 0 25px rgba(10, 156, 10, 0.4);">Tabletop Exercise 2025.2</h1>
 
 <div class="section">
     <h2>Summary</h2>
@@ -80,16 +80,28 @@
         <ul>
             <li>Unreviewed/unapproved software.</li>
             <li>The depth and accuracy of software reviews.</li>
-            <li>Malicious search results.</li>
-            <li>Can we RE? :D</li>
+            <li>Poisoned/malicious search results.</li>
+            <li>Better detection of unapproved or unwanted software.</li>
+            <li>Can we RE? &#128513;</li>
 
         </ul>
 
         <h4>The Threat Actor (Void Serpent)</h4>
         <ul>
             <li>Would we detect low privileged espionage tradecraft.</li>
-            <li>Do we have visibility into websockets.</li>
-            <li>Will we detect forced authentication mechanisms (regardless of them being blocked)?</li>
+            <ul>
+                <li>Native AD/WMI and file enumeration.</li>
+            </ul>
+            <li>Network communication detections?</li>
+            <ul>
+                <li>Long websocket sessions.</li>
+                <li>POST uploads to rare domains.</li>
+                <li>Scheduled tasks connecting to the internet.</li>
+            </ul>
+            <li>Will we detect system security posture tampering?</li>
+            <ul>
+                <li>Tampering with service permissions.</li>
+            </ul>
         </ul>
     </div>
 </div>
@@ -98,38 +110,54 @@
     <h2>Attack Chain</h2>
     <div class="placeholder">
         <ol>
-            <li>Malicious Google Search advertisement.</li>
+            <li>Malicious Google Search advertisement</li>
             <ul>
                 <li>T1583.008 Malvertising</li>
             </ul>
-            <li>User unprivileged install of unapproved software.</li>
+            <li>User installation of unapproved software</li>
             <ul>
-                <li>T1587.001 Malware?</li>
-                <li>T1587.002 cloned code signing certs.</li>
+                <li>T1587.002 Install of untrusted root certificates to CurrentUser\Root</li>
+                <li>T1587.001 Installation of malicious software</li>
+                <li>T1027.002 Software Packing (fody costura)</li>
             </ul>
-            <li>SCManager SDDL Modification PrivEsc</li>
+            <li>Scheduled task persistence "Beaver Update" and "Beaver Sync"</li>
             <ul>
-                <li> <a href="https://0xv1n.github.io/posts/scmanager/">Write-Up</a></li>
+                <li>T1503.005 Scheduled Task Persistence</li>
             </ul>
-            <li>Scheduled task persistence "Beaver Update".</li>
+            
+            <li>Communication Protocols</li>
             <ul>
-                <li>T1503.005 Scheduled Task Persistence.</li>
+                <li>T1071.001 Application Layer Protocols (websockets).</li>
+                <li>DS0023 Named Pipes</li>
             </ul>
-            <li>WebSocket C2 communication.</li>
-            <ul>
-                <li>T1071.001 Application Layer Protocols.</li>
-            </ul>
-            <li>System User Discovery</li>
+            <li>System User Discovery & Enumeration of Purchasing and Executive members</li>
             <ul>
                 <li>T1033 System Owner/User Discovery</li>
             </ul>
-            <li>Active directory enumeration.</li>
-            <li>MRU documents enumeration and exfiltration.</li>
-            <li>Secondary stage downloads.</li>
-            <li>Forced authentication through .lnk/library-ms files.</li>
+            <li>User documents enumeration and exfiltration</li>
             <ul>
-                <li>T1187 Force Authentication.</li>
-                <li>Reference: <a href="https://www.bleepingcomputer.com/news/security/windows-ntlm-hash-leak-flaw-exploited-in-phishing-attacks-on-governments/">New Windows NTLM Leak Flaw</a></li>
+                <li>T1020 Automated Exfiltration</li>
+                <li>T1029 Scheduled Transfer</li>
+            </ul>
+            <li>SCManager SDDL Modification PrivEsc</li>
+            <ul>
+                <li>T1543.003 Modification of Windows Service</li>
+                <li><a href="https://0xv1n.github.io/posts/scmanager/">Write-Up</a></li>
+            </ul>
+            <li>Secondary stage execution methods</li>
+            <ul>
+                <li>cmd</li>
+                <li>download & execute</li>
+                <li>powershell invoke</li>
+                <li>powershell command</li>
+            </ul>
+            <li>Secondary Payload - VoidChaos</li>
+            <ul>
+                <li>Metamorphic payload, does something different each execution</li>
+                <li>Creates auto-start service with sc.exe to add a backdoor user to local admins on next reboot.</li>
+                <li>Presents a toast notification to run an AV scan.</li>
+                <li>Powershell IEX of PowerSharp from S3cur3Th1sSh1t.</li>
+                <li>Powershell IEX of WinPEAS.ps1 from GitHub</li>
             </ul>
         </ol>
     </div>
@@ -139,13 +167,67 @@
     <h2>Indicators of Compromise</h2>
     <div class="placeholder">
         Hashes, unless otherwise stated, will be in SHA1.
-        <h4>Files</h4>
+        <h4>First Stage</h4>
         <ul>
-            <li>BeaverUpdate.exe, </li>
-            <li>extras.iso, </li>
-            <li>beaverpro.sketchybins.com, 139.59.28.75</li>
-            <li>beaversync.sketchybins.com, 139.59.28.75</li>
+            <li>BeaverUpdate.exe, 96400B818F2D49EB450175535817249E6B5A9CEB</li>
+            <li>BeaverSync.exe, 3267FED992AEB7278F8EE937A2C836D89DD0228B</li>
+            <li>BeaverElevateService.exe, CBBAF77FF4B74C7D0537B6C75F891A0665538F87</li>
+            <li>beaver.bitcorns.cc, 139.59.28.75</li>
             <li>voidserpent.threats.cc, 139.59.28.75</li>
+        </ul>
+
+        <h4>Secondary Stages</h4>
+        <ul>
+            <li>VoidChaos.exe, F95BB40CDEACEEC93B8D4B59AC08B3857E5F173B</li>
+            <li>WinPeas.ps1</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Relevance</h2>
+    <div class="placeholder">
+        Just a few recent-ish articles that articulate and support some of the concerns represented within this tabletop.
+
+        <ul>
+            <li>May 2025 - <a href="https://www.bleepingcomputer.com/news/security/bumblebee-malware-distributed-via-zenmap-winmrt-seo-poisoning/">Bumblebee malware SEO poisoning & Fake Downloads</a></li>
+            <li>May 2025 - <a href="https://therecord.media/coldriver-russia-cyber-espionage-lostkeys-malware">Russian linked Coldriver observed in espionage campaign</a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Final Thoughts</h2>
+    <div class="placeholder">
+        Things I wanted to add but I didn't have time or it went wide on scope:
+        <ul>
+            <li>An Office extension</li>
+            <ul>
+                <li>Leverage the installed CurrentUser\Root BeaverNotes cert for trusted Office extension.</li>
+                <li>Exfiltrate emails from certain senders for future phishing.</li>
+                <li>Exfiltration of recipient MRU list.</li>
+                <li>Injection of tracking pixels into emails.</li>
+                <li>Infection of random documents for masked execution of tertiary stages.</li>
+            </ul>
+            <li>Things to fix or complete</li>
+                <ul>
+                    <li>I at one point broke the enrichment of user info for group members of purchasing and executives, I didn't fix it because I didn't want to exfiltrate real data.</li>
+                    <li>The BeaverSync.exe upload of stolen documents is currently a fake .zip</li>
+                    <li>Write the malicious signing certificate to registry manually to bypass user installation prompt.</li>
+                    <li>Steal a local privileged process token for installation of BeaverElevateService and system compromise.</li>
+                </ul>
+            <li>Some form of lateral movement using stolen administrator tokens</li>
+            <li>Powershell profile backdoor for lateral infection</li>
+        </ul>
+
+        Problems Observed:
+        <ul>
+            <li>beaverpro.sketchybins.com was untrusted by Palo Alto for some reason, requiring http sessions before websockets would work, plus invalidation of certificates.</li>
+            <li>Fody Costura, used for generating single-file .net payloads, often leads to an anomalous .net suspicious binary detection with SentinelOne.</li>
+
         </ul>
     </div>
 </div>
