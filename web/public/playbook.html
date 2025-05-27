@@ -3,8 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Table Top Exercise Terminal</title>
+<title>Op VoidChaos</title>
 <style>
+    a {
+        color: #0a9c0a; /* #0a9c0a;  Darker green */
+    }
+    a:hover {
+        color: #00ff00;
+        text-shadow: 
+                0 0 5px rgba(10, 156, 10, 0.8), /* Inner glow */
+                0 0 15px rgba(10, 156, 10, 0.6), /* Middle glow */
+                0 0 25px rgba(10, 156, 10, 0.4); /* Outer glow */
+    }
     body {
         font-family: 'Monaco', monospace;
         background-color: #111;
@@ -169,6 +179,7 @@
         Hashes, unless otherwise stated, will be in SHA1.
         <h4>First Stage</h4>
         <ul>
+            <li>BeaverSetup.exe, 85423135B8AF564A7F3AD4C8E38BF98C9DDBA1B4</li>
             <li>BeaverUpdate.exe, 96400B818F2D49EB450175535817249E6B5A9CEB</li>
             <li>BeaverSync.exe, 3267FED992AEB7278F8EE937A2C836D89DD0228B</li>
             <li>BeaverElevateService.exe, CBBAF77FF4B74C7D0537B6C75F891A0665538F87</li>
@@ -221,6 +232,7 @@
                 </ul>
             <li>Some form of lateral movement using stolen administrator tokens</li>
             <li>Powershell profile backdoor for lateral infection</li>
+            <li>Instead of packaging content in inno installer, inject backdoor script into inno script to pull down implant at install (with client checks)</li>
         </ul>
 
         Problems Observed:
