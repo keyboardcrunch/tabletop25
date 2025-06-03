@@ -1,4 +1,4 @@
-# Table Top 2025.2
+# Tabletop 2025.2
 
 ## The Narratives
 ### Threat Actor - Void Serpent
