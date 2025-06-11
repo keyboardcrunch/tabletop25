@@ -1,5 +1,10 @@
 # Tabletop 2025.2
 
+## Foreword
+This was my first C# project and I had a 3 month timeframe to come up with a tabletop exercise that would not only look to challenge assumptions about our detection stack but also push the analyst (chosen at random) by implementing some means to avoiding successful automated analysis and feature isolation. The code is not great, the C2 is barebones, and code execution is sloppy, but it got the job done and highlighted areas of improvement (and folks had fun). 
+
+The domains and servers have all been decommissioned, this code has been released for my team and friends, you can see a [better presentation of facts here](https://html-preview.github.io/?url=https://github.com/keyboardcrunch/tabletop25/blob/main/web/public/playbook.html).
+
 ## The Narratives
 ### Threat Actor - Void Serpent
 A fictional threat actor, VoidSerpent, has backdoor'd a popular markdown notes app called BeaverNotes. Hosting the backdoored version called BeaverNotesPro on a cloned version of the original site, they lure in victims with Google Ads. This threat actor is known for their low and slow espionage campaigns where low privilege and low noise methods are favored.
@@ -7,7 +12,6 @@ A fictional threat actor, VoidSerpent, has backdoor'd a popular markdown notes a
 ### Victim - Intern Bob
 An eager intern is distraught to learn that their favorite note taking app, Obsidian, is internally banned. Frothing with rage
 they take to google to look for an alternative, stumbling upon BeaverNotesPro after clicking one of the advertisements.
-
 
 ## The Tabletop
 ### General Event Timeline
